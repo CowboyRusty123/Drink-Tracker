@@ -9,6 +9,7 @@
     body { background: #f0f2f5; color: #1a1a2e; font-family: Georgia, 'Times New Roman', serif; min-height: 100vh; }
     #app { max-width: 480px; margin: 0 auto; min-height: 100vh; padding-bottom: 30px; }
     #admin-modal-container { position: fixed; inset: 0; z-index: 200; display: none; }
+    #price-edit-container { position: fixed; inset: 0; z-index: 300; display: none; }
     input, button { font-family: inherit; }
     button { cursor: pointer; }
 
@@ -43,6 +44,7 @@
 
     .page { padding: 14px 12px; }
     .section-label { font-size: 9px; letter-spacing: 3px; color: #9ca3af; text-transform: uppercase; margin-bottom: 8px; margin-top: 10px; }
+    .edit-hint { font-size: 10px; color: #bbb; text-align: center; margin-bottom: 6px; font-style: italic; }
 
     .stat-row { display: flex; gap: 6px; margin-bottom: 12px; }
     .stat-box { flex: 1; background: #fff; border-radius: 12px; padding: 12px 4px; text-align: center; border: 1px solid #e5e7eb; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
@@ -53,7 +55,7 @@
     .happy-bar { background: #ecfdf5; border: 2px solid #059669; border-radius: 10px; padding: 9px 14px; font-size: 13px; color: #059669; margin-bottom: 10px; text-align: center; font-weight: bold; }
     .happy-notif { background: #ecfdf5; border-bottom: 2px solid #059669; padding: 12px 16px; font-size: 13px; color: #059669; display: flex; justify-content: space-between; align-items: center; font-weight: bold; }
 
-    .drink-btn { width: 100%; border-radius: 14px; padding: 13px 14px; display: flex; align-items: center; gap: 10px; margin-bottom: 8px; text-align: left; border-width: 2px; border-style: solid; background: #fff; transition: transform 0.1s, box-shadow 0.15s; cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,0.07); }
+    .drink-btn { width: 100%; border-radius: 14px; padding: 13px 14px; display: flex; align-items: center; gap: 10px; margin-bottom: 8px; text-align: left; border-width: 2px; border-style: solid; background: #fff; transition: transform 0.1s, box-shadow 0.15s; cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,0.07); user-select: none; -webkit-user-select: none; }
     .drink-btn:active { transform: scale(0.97); box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
     .drink-emoji { font-size: 26px; flex-shrink: 0; }
     .drink-mid { flex: 1; text-align: left; }
@@ -105,6 +107,7 @@
     .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; padding: 24px; }
     .modal { background: #fff; border-radius: 16px; padding: 24px; width: 100%; max-width: 340px; border: 1px solid #e5e7eb; display: flex; flex-direction: column; gap: 10px; box-shadow: 0 10px 40px rgba(0,0,0,0.15); }
     .modal-title { font-size: 18px; font-weight: bold; color: #d97706; text-align: center; }
+    .modal-sub { font-size: 12px; color: #9ca3af; text-align: center; }
     .err-text { color: #dc2626; font-size: 12px; text-align: center; display: none; font-weight: bold; }
     .modal-btns { display: flex; gap: 8px; margin-top: 4px; }
 
@@ -113,11 +116,25 @@
     .member-add-btn { background: #f59e0b; border: none; border-radius: 10px; padding: 10px 16px; font-weight: bold; color: #fff; font-size: 14px; white-space: nowrap; cursor: pointer; }
     .bottom-bar { padding: 8px 14px; border-top: 1px solid #e5e7eb; background: #fff; }
     .remove-btn { background: #fef2f2; border: 1px solid #fca5a5; color: #dc2626; border-radius: 8px; padding: 4px 10px; font-size: 11px; cursor: pointer; font-weight: bold; }
+
+    /* Price edit popup */
+    .price-popup { background: #fff; border-radius: 20px; padding: 28px 24px; width: 100%; max-width: 320px; box-shadow: 0 20px 60px rgba(0,0,0,0.2); display: flex; flex-direction: column; gap: 14px; }
+    .price-popup-emoji { font-size: 48px; text-align: center; }
+    .price-popup-name { font-size: 18px; font-weight: bold; text-align: center; color: #1a1a2e; }
+    .price-popup-hint { font-size: 12px; color: #9ca3af; text-align: center; }
+    .price-popup-fields { display: flex; flex-direction: column; gap: 10px; }
+    .price-popup-field { display: flex; align-items: center; justify-content: space-between; background: #f9fafb; border-radius: 10px; padding: 12px 14px; border: 1px solid #e5e7eb; }
+    .price-popup-label { font-size: 13px; font-weight: bold; color: #555; }
+    .price-popup-input-wrap { display: flex; align-items: center; gap: 4px; }
+    .price-popup-dollar { font-size: 18px; font-weight: bold; color: #d97706; }
+    .price-popup-input { width: 70px; background: transparent; border: none; font-size: 20px; font-weight: bold; color: #1a1a2e; outline: none; text-align: right; }
+    .price-popup-btns { display: flex; gap: 8px; }
   </style>
 </head>
 <body>
 <div id="app"></div>
 <div id="admin-modal-container"></div>
+<div id="price-edit-container"></div>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
@@ -198,6 +215,59 @@ function getAllLog(){ return getLog().filter(([,e])=>e.drinkId!=="LASTDRINKS"); 
 function totals(log){ return log.reduce((a,[,e])=>({spent:a.spent+e.price,cal:a.cal+e.calories,std:a.std+e.std}),{spent:0,cal:0,std:0}); }
 function getShoutHistory(){ return roomData?.shoutHistory?Object.values(roomData.shoutHistory).sort((a,b)=>b.time-a.time):[]; }
 
+// ── PRICE EDIT POPUP ──────────────────────────────────────────────────────────
+function showPriceEdit(drink){
+  const container=document.getElementById("price-edit-container");
+  container.style.display="block"; container.innerHTML="";
+  const overlay=document.createElement("div"); overlay.className="overlay";
+  overlay.onclick=(e)=>{ if(e.target===overlay){ container.style.display="none"; container.innerHTML=""; }};
+
+  const popup=document.createElement("div"); popup.className="price-popup";
+
+  const emoji=document.createElement("div"); emoji.className="price-popup-emoji"; emoji.textContent=drink.emoji;
+  const name=document.createElement("div"); name.className="price-popup-name"; name.textContent=drink.name;
+  const hint=document.createElement("div"); hint.className="price-popup-hint"; hint.textContent="Update prices for this venue";
+
+  const fields=document.createElement("div"); fields.className="price-popup-fields";
+
+  // Regular price field
+  const regField=document.createElement("div"); regField.className="price-popup-field";
+  const regLabel=document.createElement("div"); regLabel.className="price-popup-label"; regLabel.textContent="Regular Price";
+  const regWrap=document.createElement("div"); regWrap.className="price-popup-input-wrap";
+  const regDollar=document.createElement("span"); regDollar.className="price-popup-dollar"; regDollar.textContent="$";
+  const regInp=document.createElement("input"); regInp.className="price-popup-input"; regInp.type="number"; regInp.step="0.10"; regInp.min="0"; regInp.value=drink.price.toFixed(2);
+  regWrap.appendChild(regDollar); regWrap.appendChild(regInp); regField.appendChild(regLabel); regField.appendChild(regWrap); fields.appendChild(regField);
+
+  // Happy hour price field (only for beers)
+  let happyInp=null;
+  if(["hahn","tooheysnew","tooheyold","vb","xxxx"].includes(drink.id)){
+    const happyField=document.createElement("div"); happyField.className="price-popup-field"; happyField.style.borderColor="#059669";
+    const happyLabel=document.createElement("div"); happyLabel.className="price-popup-label"; happyLabel.style.color="#059669"; happyLabel.textContent="Happy Hour Price";
+    const happyWrap=document.createElement("div"); happyWrap.className="price-popup-input-wrap";
+    const happyDollar=document.createElement("span"); happyDollar.className="price-popup-dollar"; happyDollar.style.color="#059669"; happyDollar.textContent="$";
+    happyInp=document.createElement("input"); happyInp.className="price-popup-input"; happyInp.type="number"; happyInp.step="0.10"; happyInp.min="0"; happyInp.value=drink.happyPrice.toFixed(2);
+    happyWrap.appendChild(happyDollar); happyWrap.appendChild(happyInp); happyField.appendChild(happyLabel); happyField.appendChild(happyWrap); fields.appendChild(happyField);
+  }
+
+  const btnRow=document.createElement("div"); btnRow.className="price-popup-btns";
+  const cancelBtn=document.createElement("button"); cancelBtn.className="btn-outline"; cancelBtn.style.flex="1"; cancelBtn.textContent="Cancel";
+  cancelBtn.onclick=()=>{ container.style.display="none"; container.innerHTML=""; };
+  const saveBtn=document.createElement("button"); saveBtn.className="btn-gold"; saveBtn.style.flex="1"; saveBtn.textContent="Save ✓";
+  saveBtn.onclick=()=>{
+    drink.price=parseFloat(regInp.value)||drink.price;
+    if(happyInp) drink.happyPrice=parseFloat(happyInp.value)||drink.happyPrice;
+    container.style.display="none"; container.innerHTML="";
+    render();
+  };
+  btnRow.appendChild(cancelBtn); btnRow.appendChild(saveBtn);
+
+  popup.appendChild(emoji); popup.appendChild(name); popup.appendChild(hint);
+  popup.appendChild(fields); popup.appendChild(btnRow);
+  overlay.appendChild(popup); container.appendChild(overlay);
+  setTimeout(()=>regInp.focus(),50);
+}
+
+// ── ADMIN MODAL ───────────────────────────────────────────────────────────────
 function showAdminModal(){
   const container=document.getElementById("admin-modal-container");
   container.style.display="block"; container.innerHTML="";
@@ -225,7 +295,21 @@ function el(tag,attrs={},children=[]){
   return e;
 }
 
-function makeDrinkBtn(d,onClick){
+// Long press handler
+function addLongPress(element, onLongPress, onTap){
+  let timer=null, moved=false;
+  const start=(e)=>{ moved=false; timer=setTimeout(()=>{ timer=null; onLongPress(); },600); };
+  const move=()=>{ moved=true; if(timer){ clearTimeout(timer); timer=null; }};
+  const end=(e)=>{ if(timer){ clearTimeout(timer); timer=null; if(!moved) onTap(); }};
+  element.addEventListener("touchstart",start,{passive:true});
+  element.addEventListener("touchmove",move,{passive:true});
+  element.addEventListener("touchend",end);
+  element.addEventListener("mousedown",start);
+  element.addEventListener("mousemove",move);
+  element.addEventListener("mouseup",end);
+}
+
+function makeDrinkBtn(d, onTap){
   const price=happyHour?d.happyPrice:d.price;
   const isHappy=happyHour&&d.happyPrice<d.price;
   const priceDiv=el("div",{class:"drink-price-wrap"},[]);
@@ -236,7 +320,8 @@ function makeDrinkBtn(d,onClick){
     el("div",{class:"drink-mid"},[el("span",{class:"drink-name"},[d.name]),el("span",{class:"drink-sub"},[d.size+" · "+d.calories+" cal · "+d.std+" std"])]),
     priceDiv
   ]);
-  btn.onclick=onClick; return btn;
+  addLongPress(btn, ()=>showPriceEdit(d), onTap);
+  return btn;
 }
 
 function makeLogRow(e,d,member,onBell){
@@ -316,7 +401,7 @@ function renderSession(page){
   if(mt.std>=stdWarnAt) page.appendChild(el("div",{class:"warn"},["⚠️ "+mt.std.toFixed(1)+" standard drinks — please be careful"]));
   if(mt.spent>=spendWarnAt) page.appendChild(el("div",{class:"warn"},["💸 You've spent "+fmtMoney(mt.spent)+" tonight"]));
   if(happyHour) page.appendChild(el("div",{class:"happy-bar"},["🍺 Happy Hour — Beers are $5.50!"]));
-  page.appendChild(el("div",{class:"section-label"},["TAP TO ADD YOUR DRINK"]));
+  page.appendChild(el("div",{class:"section-label"},["TAP TO ADD · HOLD TO EDIT PRICE"]));
   drinks.forEach(d=>page.appendChild(makeDrinkBtn(d,()=>addDrink(d.id))));
   if(myLog.length>0){ page.appendChild(el("div",{class:"section-label"},["MY LOG — TAP 🔔 WHEN FINISHED"])); [...myLog].reverse().forEach(([key,e])=>{ const d=drinks.find(x=>x.id===e.drinkId); if(d) page.appendChild(makeLogRow(e,d,null,()=>markDone(key))); }); }
   const lb=el("button",{class:"btn-red"},["📯 LAST DRINKS!"]); lb.onclick=lastDrinks; page.appendChild(lb);
@@ -344,7 +429,7 @@ function renderHistory(page){
   if(log.length===0){ page.appendChild(el("div",{class:"empty"},["No drinks logged yet this session."])); return; }
   page.appendChild(el("div",{class:"section-label"},["THIS SESSION — ALL DRINKS"]));
   [...log].reverse().forEach(([key,e])=>{ if(e.drinkId==="LASTDRINKS"){ page.appendChild(el("div",{class:"last-drinks-row"},["📯 LAST DRINKS called at "+fmtClock(e.timestamp)])); return; } const d=drinks.find(x=>x.id===e.drinkId); if(d) page.appendChild(makeLogRow(e,d,e.member,null)); });
-  if(isAdmin){ const cb=el("button",{class:"btn-outline",style:{marginTop:"16px",color:"#dc2626",borderColor:"#fca5a5"}},[" 🗑 Clear Session History"]); cb.onclick=clearRoom; page.appendChild(cb); }
+  if(isAdmin){ const cb=el("button",{class:"btn-outline",style:{marginTop:"16px",color:"#dc2626",borderColor:"#fca5a5"}},["🗑 Clear Session History"]); cb.onclick=clearRoom; page.appendChild(cb); }
 }
 
 function renderAdmin(page){
