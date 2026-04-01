@@ -6,64 +6,25 @@
   <title>Drink Tracker 🍺</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      background: #0a0d14;
-      color: #f0f0f0;
-      font-family: Georgia, 'Times New Roman', serif;
-      min-height: 100vh;
-    }
-    #app {
-      max-width: 480px;
-      margin: 0 auto;
-      min-height: 100vh;
-      padding-bottom: 30px;
-    }
+    body { background: #0a0d14; color: #f0f0f0; font-family: Georgia, 'Times New Roman', serif; min-height: 100vh; }
+    #app { max-width: 480px; margin: 0 auto; min-height: 100vh; padding-bottom: 30px; }
+    #admin-modal-container { position: fixed; inset: 0; z-index: 200; display: none; }
     input, button { font-family: inherit; }
     input { color: #f0f0f0; }
     button { cursor: pointer; }
-    /* Gate */
-    .gate {
-      display: flex; flex-direction: column; align-items: center;
-      justify-content: center; min-height: 100vh;
-      padding: 40px 24px; gap: 14px;
-    }
+    .gate { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; padding: 40px 24px; gap: 14px; }
     .gate-beer { font-size: 72px; margin-bottom: 4px; }
     .gate-title { font-size: 28px; font-weight: bold; color: #f59e0b; letter-spacing: 2px; }
     .gate-sub { font-size: 15px; color: #888; }
     .date-bar { font-size: 12px; color: #555; margin-bottom: 4px; text-align: center; }
     .happy-badge { color: #10b981; font-weight: bold; }
-    /* Inputs & Buttons */
-    .input {
-      width: 100%; background: #161e2e; border: 2px solid #2a3a50;
-      border-radius: 12px; padding: 14px 16px; font-size: 16px;
-      color: #f0f0f0; outline: none;
-    }
-    .btn-gold {
-      width: 100%; background: linear-gradient(135deg,#f59e0b,#d97706);
-      border: none; border-radius: 12px; padding: 15px;
-      font-size: 16px; font-weight: bold; color: #000;
-    }
-    .btn-outline {
-      width: 100%; background: transparent; border: 1px solid #2a3a50;
-      border-radius: 12px; padding: 13px; font-size: 14px; color: #aaa;
-    }
-    .btn-red {
-      width: 100%; background: linear-gradient(135deg,#7f1d1d,#991b1b);
-      border: 2px solid #ef4444; border-radius: 12px; padding: 15px;
-      font-size: 16px; font-weight: bold; color: #fca5a5; letter-spacing: 1px;
-      margin-top: 12px;
-    }
-    .link-btn {
-      background: transparent; border: none; color: #555;
-      font-size: 12px; text-decoration: underline;
-    }
+    .input { width: 100%; background: #161e2e; border: 2px solid #2a3a50; border-radius: 12px; padding: 14px 16px; font-size: 16px; color: #f0f0f0; outline: none; }
+    .btn-gold { width: 100%; background: linear-gradient(135deg,#f59e0b,#d97706); border: none; border-radius: 12px; padding: 15px; font-size: 16px; font-weight: bold; color: #000; }
+    .btn-outline { width: 100%; background: transparent; border: 1px solid #2a3a50; border-radius: 12px; padding: 13px; font-size: 14px; color: #aaa; }
+    .btn-red { width: 100%; background: linear-gradient(135deg,#7f1d1d,#991b1b); border: 2px solid #ef4444; border-radius: 12px; padding: 15px; font-size: 16px; font-weight: bold; color: #fca5a5; letter-spacing: 1px; margin-top: 12px; }
+    .link-btn { background: transparent; border: none; color: #555; font-size: 12px; text-decoration: underline; }
     .or-div { color: #444; font-size: 12px; margin: 2px 0; }
-    /* Header */
-    .header {
-      background: linear-gradient(135deg,#1a2235,#0a0d14);
-      border-bottom: 2px solid #f59e0b;
-      padding: 12px 14px; display: flex; align-items: center; justify-content: space-between;
-    }
+    .header { background: linear-gradient(135deg,#1a2235,#0a0d14); border-bottom: 2px solid #f59e0b; padding: 12px 14px; display: flex; align-items: center; justify-content: space-between; }
     .header-title { font-size: 16px; font-weight: bold; color: #f59e0b; letter-spacing: 1px; }
     .header-sub { font-size: 11px; color: #888; margin-top: 2px; }
     .room-code { color: #f59e0b; font-weight: bold; font-size: 13px; }
@@ -71,56 +32,20 @@
     .clock-box { text-align: right; }
     .clock-time { font-size: 14px; font-weight: bold; }
     .clock-date { font-size: 9px; color: #555; letter-spacing: 1px; }
-    .gear-btn {
-      background: transparent; border: 1px solid #333; border-radius: 8px;
-      padding: 6px 10px; font-size: 16px; margin-left: 6px;
-    }
-    /* Tabs */
+    .gear-btn { background: transparent; border: 1px solid #333; border-radius: 8px; padding: 6px 10px; font-size: 16px; margin-left: 6px; }
     .tab-bar { display: flex; border-bottom: 1px solid #1e2a3a; }
-    .tab-btn {
-      flex: 1; background: transparent; border: none;
-      border-bottom: 3px solid transparent; color: #555;
-      padding: 12px 4px; font-size: 11px; transition: all 0.2s;
-    }
+    .tab-btn { flex: 1; background: transparent; border: none; border-bottom: 3px solid transparent; color: #555; padding: 12px 4px; font-size: 11px; transition: all 0.2s; }
     .tab-btn.active { color: #f59e0b; border-bottom-color: #f59e0b; }
-    /* Page */
     .page { padding: 14px 12px; }
-    .section-label {
-      font-size: 9px; letter-spacing: 3px; color: #444;
-      text-transform: uppercase; margin-bottom: 8px; margin-top: 10px;
-    }
-    /* Stats */
+    .section-label { font-size: 9px; letter-spacing: 3px; color: #444; text-transform: uppercase; margin-bottom: 8px; margin-top: 10px; }
     .stat-row { display: flex; gap: 6px; margin-bottom: 12px; }
-    .stat-box {
-      flex: 1; background: #161e2e; border-radius: 10px;
-      padding: 10px 4px; text-align: center; border: 1px solid #1e2a3a;
-    }
+    .stat-box { flex: 1; background: #161e2e; border-radius: 10px; padding: 10px 4px; text-align: center; border: 1px solid #1e2a3a; }
     .stat-val { font-size: 16px; font-weight: bold; }
     .stat-lbl { font-size: 8px; color: #555; text-transform: uppercase; letter-spacing: 1px; margin-top: 2px; }
-    /* Warnings */
-    .warn {
-      background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.3);
-      border-radius: 10px; padding: 9px 12px; font-size: 12px;
-      color: #f87171; margin-bottom: 10px; text-align: center;
-    }
-    .happy-bar {
-      background: linear-gradient(135deg,#064e3b,#065f46);
-      border: 1px solid #10b981; border-radius: 10px; padding: 9px 14px;
-      font-size: 13px; color: #6ee7b7; margin-bottom: 10px;
-      text-align: center; font-weight: bold;
-    }
-    .happy-notif {
-      background: linear-gradient(135deg,#064e3b,#065f46);
-      border: 1px solid #10b981; padding: 12px 16px; font-size: 13px;
-      color: #6ee7b7; display: flex; justify-content: space-between; align-items: center;
-    }
-    /* Drink buttons */
-    .drink-btn {
-      width: 100%; border-radius: 13px; padding: 12px 14px;
-      display: flex; align-items: center; gap: 10;
-      margin-bottom: 8px; text-align: left; border-width: 2px; border-style: solid;
-      transition: transform 0.1s, box-shadow 0.15s;
-    }
+    .warn { background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.3); border-radius: 10px; padding: 9px 12px; font-size: 12px; color: #f87171; margin-bottom: 10px; text-align: center; }
+    .happy-bar { background: linear-gradient(135deg,#064e3b,#065f46); border: 1px solid #10b981; border-radius: 10px; padding: 9px 14px; font-size: 13px; color: #6ee7b7; margin-bottom: 10px; text-align: center; font-weight: bold; }
+    .happy-notif { background: linear-gradient(135deg,#064e3b,#065f46); border: 1px solid #10b981; padding: 12px 16px; font-size: 13px; color: #6ee7b7; display: flex; justify-content: space-between; align-items: center; }
+    .drink-btn { width: 100%; border-radius: 13px; padding: 12px 14px; display: flex; align-items: center; gap: 10px; margin-bottom: 8px; text-align: left; border-width: 2px; border-style: solid; transition: transform 0.1s, box-shadow 0.15s; cursor: pointer; }
     .drink-btn:active { transform: scale(0.97); }
     .drink-emoji { font-size: 24px; flex-shrink: 0; }
     .drink-mid { flex: 1; text-align: left; }
@@ -128,12 +53,7 @@
     .drink-sub { font-size: 10px; color: #666; display: block; }
     .drink-price { font-size: 16px; font-weight: bold; text-align: right; flex-shrink: 0; }
     .drink-old-price { font-size: 10px; color: #555; text-decoration: line-through; text-align: right; }
-    /* Log rows */
-    .log-row {
-      display: flex; align-items: center; gap: 8px;
-      background: #161e2e; border-radius: 10px; padding: 8px 10px;
-      margin-bottom: 5px; border: 1px solid #1e2a3a; transition: opacity 0.3s;
-    }
+    .log-row { display: flex; align-items: center; gap: 8px; background: #161e2e; border-radius: 10px; padding: 8px 10px; margin-bottom: 5px; border: 1px solid #1e2a3a; transition: opacity 0.3s; }
     .log-row.done { opacity: 0.4; }
     .log-emoji { font-size: 16px; }
     .log-name { flex: 1; font-size: 13px; }
@@ -141,46 +61,21 @@
     .log-member { font-size: 10px; color: #555; display: block; }
     .log-time { font-size: 11px; color: #555; }
     .log-price { font-size: 12px; color: #aaa; }
-    .bell-btn { background: transparent; border: none; font-size: 18px; padding: 0 2px; }
-    /* Shout */
-    .shout-banner {
-      background: linear-gradient(135deg,#1e3a2a,#162a1e);
-      border: 1px solid #10b981; border-radius: 14px; padding: 14px 16px;
-      margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between;
-    }
+    .bell-btn { background: transparent; border: none; font-size: 18px; padding: 0 2px; cursor: pointer; }
+    .shout-banner { background: linear-gradient(135deg,#1e3a2a,#162a1e); border: 1px solid #10b981; border-radius: 14px; padding: 14px 16px; margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between; }
     .shout-who { font-size: 16px; font-weight: bold; color: #10b981; }
     .shout-round { font-size: 11px; color: #555; margin-top: 2px; }
-    .next-btn {
-      background: #10b981; border: none; border-radius: 8px;
-      padding: 8px 14px; font-weight: bold; color: #000; font-size: 13px;
-    }
-    .spin-box {
-      background: #161e2e; border: 1px solid #2a3a50; border-radius: 12px;
-      padding: 12px 14px; margin-bottom: 12px; text-align: center;
-    }
-    .spin-btn {
-      background: linear-gradient(135deg,#4c1d95,#5b21b6); border: none;
-      border-radius: 10px; padding: 11px 20px; color: #ddd6fe;
-      font-weight: bold; font-size: 14px;
-    }
+    .next-btn { background: #10b981; border: none; border-radius: 8px; padding: 8px 14px; font-weight: bold; color: #000; font-size: 13px; cursor: pointer; }
+    .spin-box { background: #161e2e; border: 1px solid #2a3a50; border-radius: 12px; padding: 12px 14px; margin-bottom: 12px; text-align: center; }
+    .spin-btn { background: linear-gradient(135deg,#4c1d95,#5b21b6); border: none; border-radius: 10px; padding: 11px 20px; color: #ddd6fe; font-weight: bold; font-size: 14px; cursor: pointer; }
     .spin-result { margin-top: 10px; font-size: 16px; font-weight: bold; color: #f59e0b; }
-    /* Chips */
     .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
-    .chip {
-      background: #1e2a3a; border: 1px solid #2a3a50; border-radius: 20px;
-      padding: 5px 12px; font-size: 13px; display: flex; align-items: center;
-      color: #aaa; gap: 4px;
-    }
+    .chip { background: #1e2a3a; border: 1px solid #2a3a50; border-radius: 20px; padding: 5px 12px; font-size: 13px; display: flex; align-items: center; color: #aaa; gap: 4px; }
     .chip.active { border-color: #f59e0b; color: #f59e0b; background: rgba(245,158,11,0.1); }
-    .chip-x { color: #ef4444; font-weight: bold; font-size: 14px; }
-    /* Shout history */
+    .chip-x { color: #ef4444; font-weight: bold; font-size: 14px; cursor: pointer; }
     .shout-hist { background: #161e2e; border-radius: 10px; border: 1px solid #1e2a3a; overflow: hidden; margin-bottom: 12px; }
     .shout-hist-row { padding: 7px 12px; display: flex; justify-content: space-between; border-bottom: 1px solid #1a2030; font-size: 13px; }
-    /* History */
-    .week-card {
-      background: linear-gradient(135deg,#1a2235,#161e2e);
-      border: 1px solid #2a3a50; border-radius: 14px; padding: 18px; margin-bottom: 16px;
-    }
+    .week-card { background: linear-gradient(135deg,#1a2235,#161e2e); border: 1px solid #2a3a50; border-radius: 14px; padding: 18px; margin-bottom: 16px; }
     .week-title { font-size: 12px; color: #f59e0b; font-weight: bold; margin-bottom: 12px; letter-spacing: 1px; }
     .week-stats { display: flex; justify-content: space-around; text-align: center; }
     .week-num { font-size: 20px; font-weight: bold; }
@@ -188,66 +83,35 @@
     .hist-card { margin-bottom: 12px; background: #161e2e; border-radius: 12px; overflow: hidden; border: 1px solid #1e2a3a; }
     .hist-head { padding: 10px 12px; background: #1e2a3a; display: flex; justify-content: space-between; align-items: center; }
     .hist-meta { font-size: 11px; color: #f59e0b; }
-    .hist-stats { padding: 6px 12px; display: flex; gap: 14px; background: #181f30; }
-    .hist-stat { font-size: 11px; color: #555; }
-    .hist-log-row { display: flex; align-items: center; gap: 8px; padding: 5px 12px; border-top: 1px solid #1a2030; }
-    .last-drinks-row {
-      background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.3);
-      border-radius: 8px; padding: 8px 12px; font-size: 12px;
-      color: #f87171; margin-bottom: 5px; text-align: center;
-    }
-    /* Admin */
+    .last-drinks-row { background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.3); border-radius: 8px; padding: 8px 12px; font-size: 12px; color: #f87171; margin-bottom: 5px; text-align: center; }
     .admin-tabs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
-    .admin-tab {
-      background: #1e2a3a; border: 1px solid #2a3a50; border-radius: 20px;
-      padding: 5px 12px; font-size: 13px; color: #aaa;
-    }
+    .admin-tab { background: #1e2a3a; border: 1px solid #2a3a50; border-radius: 20px; padding: 5px 12px; font-size: 13px; color: #aaa; cursor: pointer; }
     .admin-tab.active { border-color: #f59e0b; color: #f59e0b; background: rgba(245,158,11,0.1); }
-    .admin-row {
-      display: flex; align-items: center; gap: 10px; background: #161e2e;
-      border-radius: 12px; padding: 11px 12px; margin-bottom: 8px; border: 1px solid #1e2a3a;
-    }
-    .price-box {
-      display: flex; align-items: center; background: #0a0d14;
-      border: 1px solid #2a3a50; border-radius: 8px; padding: 5px 8px;
-    }
-    .price-input {
-      background: transparent; border: none; color: #f0f0f0;
-      font-size: 15px; font-weight: bold; width: 55px; outline: none;
-    }
-    /* Modal */
-    .overlay {
-      position: fixed; inset: 0; background: rgba(0,0,0,0.85);
-      display: flex; align-items: center; justify-content: center; z-index: 100; padding: 24px;
-    }
-    .modal {
-      background: #161e2e; border-radius: 16px; padding: 24px;
-      width: 100%; max-width: 340px; border: 1px solid #2a3a50;
-    }
-    .modal-title { font-size: 18px; font-weight: bold; color: #f59e0b; text-align: center; margin-bottom: 14px; }
-    .err-text { color: #f87171; font-size: 12px; text-align: center; margin-top: 4px; }
-    .modal-btns { display: flex; gap: 8px; margin-top: 12px; }
+    .admin-row { display: flex; align-items: center; gap: 10px; background: #161e2e; border-radius: 12px; padding: 11px 12px; margin-bottom: 8px; border: 1px solid #1e2a3a; }
+    .price-box { display: flex; align-items: center; background: #0a0d14; border: 1px solid #2a3a50; border-radius: 8px; padding: 5px 8px; }
+    .price-input { background: transparent; border: none; color: #f0f0f0; font-size: 15px; font-weight: bold; width: 55px; outline: none; }
+    /* FIXED MODAL - separate from main render cycle */
+    .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); display: flex; align-items: center; justify-content: center; padding: 24px; }
+    .modal { background: #161e2e; border-radius: 16px; padding: 24px; width: 100%; max-width: 340px; border: 1px solid #2a3a50; display: flex; flex-direction: column; gap: 10px; }
+    .modal-title { font-size: 18px; font-weight: bold; color: #f59e0b; text-align: center; }
+    .err-text { color: #f87171; font-size: 12px; text-align: center; display: none; }
+    .modal-btns { display: flex; gap: 8px; margin-top: 4px; }
     .empty { text-align: center; color: #444; padding: 60px 20px; font-size: 14px; line-height: 2; }
     .member-add-row { display: flex; gap: 8px; margin-bottom: 10px; }
-    .member-add-btn {
-      background: #f59e0b; border: none; border-radius: 10px;
-      padding: 10px 16px; font-weight: bold; color: #000; font-size: 14px; white-space: nowrap;
-    }
+    .member-add-btn { background: #f59e0b; border: none; border-radius: 10px; padding: 10px 16px; font-weight: bold; color: #000; font-size: 14px; white-space: nowrap; cursor: pointer; }
     .bottom-bar { padding: 8px 14px; border-top: 1px solid #1e2a3a; }
-    .remove-btn {
-      background: transparent; border: 1px solid #ef4444; color: #ef4444;
-      border-radius: 8px; padding: 4px 10px; font-size: 11px;
-    }
+    .remove-btn { background: transparent; border: 1px solid #ef4444; color: #ef4444; border-radius: 8px; padding: 4px 10px; font-size: 11px; cursor: pointer; }
   </style>
 </head>
 <body>
 <div id="app"></div>
+<!-- Admin modal lives OUTSIDE #app so it never gets wiped by render() -->
+<div id="admin-modal-container"></div>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { getDatabase, ref, set, onValue, push, remove, update } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
-// ── FIREBASE CONFIG ──────────────────────────────────────────────────────────
 const FIREBASE_CONFIG = {
   apiKey: "AIzaSyDKNedtyqAAl6iGwk0ThhnaPLKw17XuxPM",
   authDomain: "drink-tracker-3e11c.firebaseapp.com",
@@ -258,7 +122,6 @@ const FIREBASE_CONFIG = {
   appId: "1:27005216782:web:9bebbfe9cfe13925baf45f"
 };
 
-// ── DRINKS ───────────────────────────────────────────────────────────────────
 const DEFAULT_DRINKS = [
   { id:"hahn",       name:"Hahn Super Dry",  emoji:"🍺", size:"Schooner 425ml", price:7.60, happyPrice:5.50, calories:114, std:1.2, color:"#C8102E" },
   { id:"tooheysnew", name:"Tooheys New",      emoji:"🍺", size:"Schooner 425ml", price:7.60, happyPrice:5.50, calories:120, std:1.2, color:"#003087" },
@@ -271,33 +134,13 @@ const DEFAULT_DRINKS = [
   { id:"scotch7oz",  name:"Scotch & Coke",    emoji:"🥃", size:"7oz Glass",      price:8.00, happyPrice:8.00, calories:130, std:1.0, color:"#6B3A2A" },
 ];
 
-const HAPPY_DAYS = [5,6,0];
-const HAPPY_START = 16;
-const HAPPY_END = 18;
+const HAPPY_DAYS=[5,6,0], HAPPY_START=16, HAPPY_END=18;
 
-// ── HELPERS ───────────────────────────────────────────────────────────────────
-function isHappyHour() {
-  const n=new Date(), d=n.getDay(), h=n.getHours();
-  return HAPPY_DAYS.includes(d) && h>=HAPPY_START && h<HAPPY_END;
-}
+function isHappyHour(){ const n=new Date(); return HAPPY_DAYS.includes(n.getDay())&&n.getHours()>=HAPPY_START&&n.getHours()<HAPPY_END; }
 function fmtMoney(n){ return "$"+Number(n).toFixed(2); }
 function fmtClock(t){ return new Date(t).toLocaleTimeString([],{hour:"2-digit",minute:"2-digit"}); }
 function genCode(){ return Math.random().toString(36).substring(2,7).toUpperCase(); }
-function el(tag,attrs={},children=[]){
-  const e=document.createElement(tag);
-  for(const [k,v] of Object.entries(attrs)){
-    if(k==="style"&&typeof v==="object") Object.assign(e.style,v);
-    else if(k.startsWith("on")) e.addEventListener(k.slice(2).toLowerCase(),v);
-    else e.setAttribute(k,v);
-  }
-  for(const c of children){
-    if(typeof c==="string") e.appendChild(document.createTextNode(c));
-    else if(c) e.appendChild(c);
-  }
-  return e;
-}
 
-// ── SOUNDS ────────────────────────────────────────────────────────────────────
 function playCowbell(){
   try{
     const ctx=new(window.AudioContext||window.webkitAudioContext)();
@@ -314,6 +157,7 @@ function playCowbell(){
     play(800,0.28,0.05,0.3);play(600,0.30,0.06,0.2);
   }catch{}
 }
+
 function playAirhorn(){
   try{
     const ctx=new(window.AudioContext||window.webkitAudioContext)();
@@ -337,53 +181,38 @@ function playAirhorn(){
 let db, roomCode="", roomData={}, screen="name";
 let userName=localStorage.getItem("dt_name")||"";
 let isAdmin=false, currentTab="session", adminSection="prices";
-let drinks=[...DEFAULT_DRINKS];
+let drinks=DEFAULT_DRINKS.map(d=>({...d}));
 let adminPass="Sydneybuses1977";
 let stdWarnAt=4, spendWarnAt=50;
 let happyHour=isHappyHour(), prevHappy=isHappyHour(), showHappyNotif=false;
-let spinning=false, spinResult=null, newMemberInput="";
+let spinning=false, spinResult=null;
 let nowDate=new Date();
 const dayNames=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
-
 if(userName) screen="home";
 
-// ── FIREBASE ──────────────────────────────────────────────────────────────────
-const app=initializeApp(FIREBASE_CONFIG);
-db=getDatabase(app);
+const fbApp=initializeApp(FIREBASE_CONFIG);
+db=getDatabase(fbApp);
 
 function subscribeRoom(){
-  onValue(ref(db,`rooms/${roomCode}`),snap=>{
-    roomData=snap.val()||{};
-    render();
-  });
+  onValue(ref(db,`rooms/${roomCode}`),snap=>{ roomData=snap.val()||{}; render(); });
 }
 
 // ── ACTIONS ───────────────────────────────────────────────────────────────────
 function createRoom(){
   if(!userName.trim()) return;
   roomCode=genCode();
-  set(ref(db,`rooms/${roomCode}`),{
-    created:Date.now(),
-    members:{[userName]:{joinedAt:Date.now(),shoutCount:0}},
-    drinkLog:{}, shoutOrder:[userName], currentShout:0, roundCount:0, shoutHistory:{}
-  });
-  subscribeRoom();
-  screen="session"; render();
+  set(ref(db,`rooms/${roomCode}`),{ created:Date.now(), members:{[userName]:{joinedAt:Date.now(),shoutCount:0}}, drinkLog:{}, shoutOrder:[userName], currentShout:0, roundCount:0, shoutHistory:{} });
+  subscribeRoom(); screen="session"; render();
 }
 function joinRoom(code){
   if(!userName.trim()||!code.trim()) return;
-  roomCode=code.toUpperCase();
+  roomCode=code.toUpperCase().trim();
   update(ref(db,`rooms/${roomCode}/members/${userName}`),{joinedAt:Date.now(),shoutCount:0});
-  subscribeRoom();
-  screen="session"; render();
+  subscribeRoom(); screen="session"; render();
 }
 function addDrink(drinkId){
   const drink=drinks.find(d=>d.id===drinkId); if(!drink) return;
-  const price=happyHour?drink.happyPrice:drink.price;
-  push(ref(db,`rooms/${roomCode}/drinkLog`),{
-    drinkId,member:userName,timestamp:Date.now(),
-    price,calories:drink.calories,std:drink.std,done:false
-  });
+  push(ref(db,`rooms/${roomCode}/drinkLog`),{ drinkId, member:userName, timestamp:Date.now(), price:happyHour?drink.happyPrice:drink.price, calories:drink.calories, std:drink.std, done:false });
 }
 function markDone(key){
   playCowbell();
@@ -392,8 +221,7 @@ function markDone(key){
 }
 function nextShout(){
   const order=roomData.shoutOrder||[], curr=roomData.currentShout||0;
-  const nextIdx=(curr+1)%order.length;
-  const shouter=order[curr];
+  const nextIdx=(curr+1)%order.length, shouter=order[curr];
   const newRound=nextIdx===0?(roomData.roundCount||0)+1:(roomData.roundCount||0);
   update(ref(db,`rooms/${roomCode}`),{currentShout:nextIdx,roundCount:newRound});
   update(ref(db,`rooms/${roomCode}/members/${shouter}`),{shoutCount:((roomData.members?.[shouter]?.shoutCount)||0)+1});
@@ -404,15 +232,14 @@ function spinForFirst(){
   spinning=true; spinResult=null; render();
   let count=0;
   const iv=setInterval(()=>{
-    spinResult=order[Math.floor(Math.random()*order.length)];
-    count++;
+    spinResult=order[Math.floor(Math.random()*order.length)]; count++;
     if(count>20){
       clearInterval(iv);
       const winner=order[Math.floor(Math.random()*order.length)];
       spinResult=winner; spinning=false;
       update(ref(db,`rooms/${roomCode}`),{currentShout:order.indexOf(winner)});
-      render();
-    } else render();
+    }
+    render();
   },100);
 }
 function addMember(name){
@@ -426,423 +253,118 @@ function removeMember(name){
   remove(ref(db,`rooms/${roomCode}/members/${name}`));
   update(ref(db,`rooms/${roomCode}`),{shoutOrder:order});
 }
-function clearRoom(){
-  update(ref(db,`rooms/${roomCode}`),{drinkLog:{},roundCount:0,currentShout:0,shoutHistory:{}});
-}
+function clearRoom(){ update(ref(db,`rooms/${roomCode}`),{drinkLog:{},roundCount:0,currentShout:0,shoutHistory:{}}); }
 function lastDrinks(){
   playAirhorn();
-  push(ref(db,`rooms/${roomCode}/drinkLog`),{
-    drinkId:"LASTDRINKS",member:"SYSTEM",timestamp:Date.now(),price:0,calories:0,std:0,done:false
-  });
+  push(ref(db,`rooms/${roomCode}/drinkLog`),{drinkId:"LASTDRINKS",member:"SYSTEM",timestamp:Date.now(),price:0,calories:0,std:0,done:false});
 }
 
-// ── COMPUTED ──────────────────────────────────────────────────────────────────
 function getLog(){ return roomData?.drinkLog?Object.entries(roomData.drinkLog):[]; }
 function getMyLog(){ return getLog().filter(([,e])=>e.member===userName&&e.drinkId!=="LASTDRINKS"); }
 function getAllLog(){ return getLog().filter(([,e])=>e.drinkId!=="LASTDRINKS"); }
 function totals(log){ return log.reduce((a,[,e])=>({spent:a.spent+e.price,cal:a.cal+e.calories,std:a.std+e.std}),{spent:0,cal:0,std:0}); }
 function getShoutHistory(){ return roomData?.shoutHistory?Object.values(roomData.shoutHistory).sort((a,b)=>b.time-a.time):[]; }
 
-// ── RENDER ────────────────────────────────────────────────────────────────────
-function render(){
-  const root=document.getElementById("app");
-  root.innerHTML="";
+// ── ADMIN MODAL (lives outside #app, never wiped by render) ───────────────────
+function showAdminModal(){
+  const container=document.getElementById("admin-modal-container");
+  container.style.display="block";
+  container.innerHTML="";
 
-  if(screen==="name") { root.appendChild(renderNameScreen()); return; }
-  if(screen==="home") { root.appendChild(renderHomeScreen()); return; }
-  root.appendChild(renderMain());
-}
+  const overlay=document.createElement("div");
+  overlay.className="overlay";
 
-function renderNameScreen(){
-  const inp=el("input",{class:"input",placeholder:"Your name...",type:"text"});
-  const btn=el("button",{class:"btn-gold"},["Let's Go 🍻"]);
-  btn.onclick=()=>{
-    if(inp.value.trim()){
-      userName=inp.value.trim();
-      localStorage.setItem("dt_name",userName);
-      screen="home"; render();
+  const modal=document.createElement("div");
+  modal.className="modal";
+
+  const title=document.createElement("div");
+  title.className="modal-title";
+  title.textContent="⚙️ Admin Access";
+
+  const inp=document.createElement("input");
+  inp.className="input";
+  inp.type="password";
+  inp.placeholder="Password...";
+  inp.autocomplete="off";
+
+  const err=document.createElement("div");
+  err.className="err-text";
+  err.textContent="Incorrect password";
+
+  const btnRow=document.createElement("div");
+  btnRow.className="modal-btns";
+
+  const cancelBtn=document.createElement("button");
+  cancelBtn.className="btn-outline";
+  cancelBtn.style.flex="1";
+  cancelBtn.textContent="Cancel";
+  cancelBtn.onclick=()=>{ container.style.display="none"; container.innerHTML=""; };
+
+  const unlockBtn=document.createElement("button");
+  unlockBtn.className="btn-gold";
+  unlockBtn.style.flex="1";
+  unlockBtn.textContent="Unlock";
+  unlockBtn.onclick=()=>{
+    if(inp.value===adminPass){
+      container.style.display="none"; container.innerHTML="";
+      isAdmin=true; currentTab="admin"; render();
+    } else {
+      err.style.display="block";
+      inp.value="";
+      inp.focus();
     }
   };
-  inp.addEventListener("keydown",e=>{ if(e.key==="Enter") btn.click(); });
-  const d=el("div",{class:"gate"},[
-    el("div",{class:"gate-beer"},["🍺"]),
-    el("div",{class:"gate-title"},["Drink Tracker"]),
-    el("div",{class:"gate-sub"},["Enter your name to get started"]),
-    inp, btn
-  ]);
-  setTimeout(()=>inp.focus(),50);
-  return d;
-}
 
-function renderHomeScreen(){
-  const timeStr=nowDate.toLocaleTimeString([],{hour:"2-digit",minute:"2-digit"});
-  const dateStr=`${dayNames[nowDate.getDay()]} ${nowDate.toLocaleDateString("en-AU",{day:"numeric",month:"short",year:"numeric"})}`;
-  const dateEl=el("div",{class:"date-bar"},[dateStr+" · "+timeStr]);
-  if(happyHour){ const s=el("span",{class:"happy-badge"},[" 🍺 HAPPY HOUR!"]); dateEl.appendChild(s); }
+  inp.addEventListener("keydown",e=>{ if(e.key==="Enter") unlockBtn.click(); });
 
-  const roomInp=el("input",{class:"input",placeholder:"Enter room code...",maxlength:"5",style:{textTransform:"uppercase",marginBottom:"4px"}});
-  roomInp.addEventListener("input",()=>roomInp.value=roomInp.value.toUpperCase());
+  btnRow.appendChild(cancelBtn);
+  btnRow.appendChild(unlockBtn);
+  modal.appendChild(title);
+  modal.appendChild(inp);
+  modal.appendChild(err);
+  modal.appendChild(btnRow);
+  overlay.appendChild(modal);
+  container.appendChild(overlay);
 
-  const createBtn=el("button",{class:"btn-gold"},["+ Create New Session"]);
-  createBtn.onclick=createRoom;
-
-  const joinBtn=el("button",{class:"btn-outline"},["Join Session"]);
-  joinBtn.onclick=()=>joinRoom(roomInp.value);
-  roomInp.addEventListener("keydown",e=>{ if(e.key==="Enter") joinBtn.click(); });
-
-  const changeBtn=el("button",{class:"link-btn"},["Not "+userName+"? Change name"]);
-  changeBtn.onclick=()=>{ userName=""; localStorage.removeItem("dt_name"); screen="name"; render(); };
-
-  return el("div",{class:"gate"},[
-    el("div",{class:"gate-beer"},["🍺"]),
-    el("div",{class:"gate-title"},["Drink Tracker"]),
-    el("div",{class:"gate-sub"},["G'day "+userName+"!"]),
-    dateEl,
-    createBtn,
-    el("div",{class:"or-div"},["— or join existing —"]),
-    roomInp, joinBtn, changeBtn
-  ]);
-}
-
-function renderMain(){
-  const wrap=el("div",{});
-
-  // Happy hour notif
-  if(showHappyNotif){
-    const close=el("button",{style:{background:"transparent",border:"none",color:"#6ee7b7",fontSize:"16px"}},["✕"]);
-    close.onclick=()=>{ showHappyNotif=false; render(); };
-    wrap.appendChild(el("div",{class:"happy-notif"},["🍺 HAPPY HOUR! Beer prices have dropped to $5.50! ",close]));
-  }
-
-  // Header
-  const timeStr=nowDate.toLocaleTimeString([],{hour:"2-digit",minute:"2-digit"});
-  const dateStr=`${dayNames[nowDate.getDay()]} ${nowDate.toLocaleDateString("en-AU",{day:"numeric",month:"short",year:"numeric"})}`;
-  const gear=el("button",{class:"gear-btn"},["⚙️"]);
-  gear.onclick=()=>{
-    if(isAdmin){ currentTab="admin"; render(); }
-    else renderAdminModal(wrap);
-  };
-  const headerSub=el("div",{class:"header-sub"},[]);
-  const rc=el("span",{class:"room-code"},["#"+roomCode]); headerSub.appendChild(rc);
-  headerSub.appendChild(document.createTextNode(" · "+userName));
-  if(happyHour){ headerSub.appendChild(el("span",{class:"happy-tag"},[" · 🍺 Happy Hour!"])); }
-  wrap.appendChild(el("div",{class:"header"},[
-    el("div",{},[el("div",{class:"header-title"},["🍺 Drink Tracker"]),headerSub]),
-    el("div",{style:{display:"flex",alignItems:"center",gap:"6px"}},[
-      el("div",{class:"clock-box"},[
-        el("div",{class:"clock-time"},[timeStr]),
-        el("div",{class:"clock-date"},[dateStr])
-      ]),
-      gear
-    ])
-  ]));
-
-  // Tab bar
-  const tabs=["session","shout","history"];
-  const tabLabels={"session":"🍺 My Drinks","shout":"🔔 The Shout","history":"📋 History"};
-  const tabBar=el("div",{class:"tab-bar"},[]);
-  tabs.forEach(t=>{
-    const btn=el("button",{class:"tab-btn"+(t===currentTab?" active":"")+(isAdmin&&t==="admin"?" active":""),[`data-tab`]:t},[tabLabels[t]||t]);
-    btn.onclick=()=>{ currentTab=t; render(); };
-    tabBar.appendChild(btn);
-  });
-  wrap.appendChild(tabBar);
-
-  // Content
-  const page=el("div",{class:"page"},[]);
-  if(currentTab==="session") renderSession(page);
-  else if(currentTab==="shout") renderShout(page);
-  else if(currentTab==="history") renderHistory(page);
-  else if(currentTab==="admin"&&isAdmin) renderAdmin(page);
-  wrap.appendChild(page);
-
-  // Back button
-  const back=el("div",{class:"bottom-bar"},[]);
-  const backBtn=el("button",{class:"link-btn"},["← Back to Lobby"]);
-  backBtn.onclick=()=>{ screen="home"; roomCode=""; roomData={}; isAdmin=false; render(); };
-  back.appendChild(backBtn);
-  wrap.appendChild(back);
-
-  return wrap;
-}
-
-function renderAdminModal(wrap){
-  const inp=el("input",{class:"input",type:"password",placeholder:"Password..."});
-  const err=el("div",{class:"err-text",style:{display:"none"}},["Incorrect password"]);
-  const cancel=el("button",{class:"btn-outline",style:{flex:"1"}},["Cancel"]);
-  const unlock=el("button",{class:"btn-gold",style:{flex:"1"}},["Unlock"]);
-  cancel.onclick=()=>{ overlay.remove(); };
-  unlock.onclick=()=>{
-    if(inp.value===adminPass){ isAdmin=true; overlay.remove(); currentTab="admin"; render(); }
-    else { err.style.display="block"; }
-  };
-  inp.addEventListener("keydown",e=>{ if(e.key==="Enter") unlock.click(); });
-  const overlay=el("div",{class:"overlay"},[
-    el("div",{class:"modal"},[
-      el("div",{class:"modal-title"},["⚙️ Admin Access"]),
-      inp, err,
-      el("div",{class:"modal-btns"},[cancel,unlock])
-    ])
-  ]);
-  wrap.appendChild(overlay);
   setTimeout(()=>inp.focus(),50);
 }
 
-function renderSession(page){
-  const myLog=getMyLog(), mt=totals(myLog);
-
-  // Stats
-  const statRow=el("div",{class:"stat-row"},[]);
-  [["Spent",fmtMoney(mt.spent),"#f59e0b"],["Calories",Math.round(mt.cal),"#ef4444"],["Std Drinks",mt.std.toFixed(1),"#3b82f6"],["My Drinks",myLog.length,"#10b981"]].forEach(([l,v,c])=>{
-    statRow.appendChild(el("div",{class:"stat-box",style:{borderTop:`3px solid ${c}`}},[
-      el("div",{class:"stat-val",style:{color:c}},[String(v)]),
-      el("div",{class:"stat-lbl"},[l])
-    ]));
-  });
-  page.appendChild(statRow);
-
-  if(mt.std>=stdWarnAt) page.appendChild(el("div",{class:"warn"},["⚠️ "+mt.std.toFixed(1)+" standard drinks — please be careful"]));
-  if(mt.spent>=spendWarnAt) page.appendChild(el("div",{class:"warn"},["💸 You've spent "+fmtMoney(mt.spent)+" tonight"]));
-  if(happyHour) page.appendChild(el("div",{class:"happy-bar"},["🍺 Happy Hour — Beers are $5.50!"]));
-
-  page.appendChild(el("div",{class:"section-label"},["TAP TO ADD YOUR DRINK"]));
-  drinks.forEach(d=>page.appendChild(makeDrinkBtn(d,()=>addDrink(d.id))));
-
-  if(myLog.length>0){
-    page.appendChild(el("div",{class:"section-label"},["MY LOG — TAP 🔔 WHEN FINISHED"]));
-    [...myLog].reverse().forEach(([key,e])=>{
-      const d=drinks.find(x=>x.id===e.drinkId); if(!d) return;
-      page.appendChild(makeLogRow(e,d,null,()=>markDone(key)));
-    });
+// ── HELPERS ───────────────────────────────────────────────────────────────────
+function el(tag,attrs={},children=[]){
+  const e=document.createElement(tag);
+  for(const [k,v] of Object.entries(attrs)){
+    if(k==="style"&&typeof v==="object") Object.assign(e.style,v);
+    else if(k.startsWith("on")) e.addEventListener(k.slice(2).toLowerCase(),v);
+    else e.setAttribute(k,v);
   }
-
-  const lastBtn=el("button",{class:"btn-red"},["📯 LAST DRINKS!"]);
-  lastBtn.onclick=lastDrinks;
-  page.appendChild(lastBtn);
+  for(const c of children){
+    if(typeof c==="string") e.appendChild(document.createTextNode(c));
+    else if(c) e.appendChild(c);
+  }
+  return e;
 }
 
-function renderShout(page){
-  const allLog=getAllLog(), at=totals(allLog);
-  const shoutOrder=roomData?.shoutOrder||[];
-  const currentShout=roomData?.currentShout||0;
-  const roundCount=roomData?.roundCount||0;
-
-  // Group stats
-  const statRow=el("div",{class:"stat-row"},[]);
-  [["Group $",fmtMoney(at.spent),"#f59e0b"],["Calories",Math.round(at.cal),"#ef4444"],["Rounds",roundCount,"#a78bfa"],["Drinks",allLog.length,"#10b981"]].forEach(([l,v,c])=>{
-    statRow.appendChild(el("div",{class:"stat-box",style:{borderTop:`3px solid ${c}`}},[
-      el("div",{class:"stat-val",style:{color:c}},[String(v)]),
-      el("div",{class:"stat-lbl"},[l])
-    ]));
-  });
-  page.appendChild(statRow);
-
-  // Current shout
-  if(shoutOrder.length>0){
-    const nextBtn=el("button",{class:"next-btn"},["Next →"]);
-    nextBtn.onclick=nextShout;
-    page.appendChild(el("div",{class:"shout-banner"},[
-      el("div",{},[
-        el("div",{class:"shout-who"},["🔔 "+shoutOrder[currentShout]+"'s shout!"]),
-        el("div",{class:"shout-round"},["Round "+(roundCount+1)])
-      ]),
-      nextBtn
-    ]));
-  }
-
-  // Spin
-  if(shoutOrder.length>1){
-    const spinBtn=el("button",{class:"spin-btn"},[spinning?"🎲 "+spinResult+"...":"🎲 Spin for First Shout!"]);
-    spinBtn.onclick=spinForFirst;
-    spinBtn.disabled=spinning;
-    const spinBox=el("div",{class:"spin-box"},[spinBtn]);
-    if(spinResult&&!spinning) spinBox.appendChild(el("div",{class:"spin-result"},["🎉 "+spinResult+" goes first!"]));
-    page.appendChild(spinBox);
-  }
-
-  // Add members
-  page.appendChild(el("div",{class:"section-label"},["WHO'S IN THE SHOUT?"]));
-  const memberInp=el("input",{class:"input",placeholder:"Add member...",style:{flex:"1",marginBottom:"0",padding:"10px 12px"}});
-  memberInp.value=newMemberInput;
-  memberInp.addEventListener("input",()=>newMemberInput=memberInp.value);
-  const addBtn=el("button",{class:"member-add-btn"},["+ Add"]);
-  addBtn.onclick=()=>{ addMember(memberInp.value); memberInp.value=""; newMemberInput=""; };
-  memberInp.addEventListener("keydown",e=>{ if(e.key==="Enter") addBtn.click(); });
-  page.appendChild(el("div",{class:"member-add-row"},[memberInp,addBtn]));
-
-  // Chips
-  const chips=el("div",{class:"chips"},[]);
-  shoutOrder.forEach((m,i)=>{
-    const chip=el("div",{class:"chip"+(i===currentShout?" active":"")},[m]);
-    if(isAdmin){
-      const x=el("span",{class:"chip-x"},["×"]);
-      x.onclick=()=>removeMember(m);
-      chip.appendChild(x);
-    }
-    chips.appendChild(chip);
-  });
-  page.appendChild(chips);
-
-  // Shout history
-  const hist=getShoutHistory();
-  if(hist.length>0){
-    page.appendChild(el("div",{class:"section-label"},["SHOUT HISTORY"]));
-    const histEl=el("div",{class:"shout-hist"},[]);
-    hist.slice(0,10).forEach(h=>{
-      histEl.appendChild(el("div",{class:"shout-hist-row"},[
-        el("span",{style:{color:"#f59e0b"}},[h.name]),
-        el("span",{style:{fontSize:"11px",color:"#555"}},[fmtClock(h.time)])
-      ]));
-    });
-    page.appendChild(histEl);
-  }
-
-  // Group log
-  if(allLog.length>0){
-    page.appendChild(el("div",{class:"section-label"},["GROUP LOG — TAP 🔔 WHEN FINISHED"]));
-    [...allLog].reverse().forEach(([key,e])=>{
-      const d=drinks.find(x=>x.id===e.drinkId); if(!d) return;
-      page.appendChild(makeLogRow(e,d,e.member,()=>markDone(key)));
-    });
-  }
-
-  const lastBtn=el("button",{class:"btn-red"},["📯 LAST DRINKS!"]);
-  lastBtn.onclick=lastDrinks;
-  page.appendChild(lastBtn);
-}
-
-function renderHistory(page){
-  const log=getLog();
-  if(log.length===0){ page.appendChild(el("div",{class:"empty"},["No drinks logged yet this session."])); return; }
-  page.appendChild(el("div",{class:"section-label"},["THIS SESSION — ALL DRINKS"]));
-  [...log].reverse().forEach(([key,e])=>{
-    if(e.drinkId==="LASTDRINKS"){
-      page.appendChild(el("div",{class:"last-drinks-row"},["📯 LAST DRINKS called at "+fmtClock(e.timestamp)]));
-      return;
-    }
-    const d=drinks.find(x=>x.id===e.drinkId); if(!d) return;
-    page.appendChild(makeLogRow(e,d,e.member,null,true));
-  });
-  if(isAdmin){
-    const clr=el("button",{class:"btn-outline",style:{marginTop:"16px",color:"#ef4444",borderColor:"#ef4444"}},["🗑 Clear Session History"]);
-    clr.onclick=clearRoom;
-    page.appendChild(clr);
-  }
-}
-
-function renderAdmin(page){
-  page.appendChild(el("div",{style:{fontSize:"18px",fontWeight:"bold",color:"#f59e0b",marginBottom:"14px"}},["⚙️ Admin Panel"]));
-
-  const secs=[["prices","💰 Prices"],["happyhour","🍺 Happy Hour"],["warnings","⚠️ Warnings"],["members","👥 Members"],["password","🔒 Password"]];
-  const tabsEl=el("div",{class:"admin-tabs"},[]);
-  secs.forEach(([k,label])=>{
-    const b=el("button",{class:"admin-tab"+(adminSection===k?" active":"")},[ label]);
-    b.onclick=()=>{ adminSection=k; render(); };
-    tabsEl.appendChild(b);
-  });
-  page.appendChild(tabsEl);
-
-  if(adminSection==="prices"){
-    drinks.forEach(d=>{
-      const inp=el("input",{type:"number",step:"0.10",min:"0",class:"price-input"});
-      inp.value=d.price;
-      inp.addEventListener("change",()=>{ d.price=parseFloat(inp.value)||0; });
-      page.appendChild(el("div",{class:"admin-row"},[
-        el("span",{style:{fontSize:"20px"}},[d.emoji]),
-        el("div",{style:{flex:"1"}},[
-          el("div",{style:{fontSize:"13px",fontWeight:"bold",color:d.color}},[d.name]),
-          el("div",{style:{fontSize:"10px",color:"#555"}},[d.size])
-        ]),
-        el("div",{class:"price-box"},[el("span",{style:{color:"#f59e0b",fontWeight:"bold"}},["$"]),inp])
-      ]));
-    });
-  }
-
-  if(adminSection==="happyhour"){
-    page.appendChild(el("div",{class:"section-label"},["HAPPY HOUR BEER PRICES"]));
-    drinks.filter(d=>["hahn","tooheysnew","tooheyold","vb","xxxx"].includes(d.id)).forEach(d=>{
-      const inp=el("input",{type:"number",step:"0.10",min:"0",class:"price-input"});
-      inp.value=d.happyPrice;
-      inp.addEventListener("change",()=>{ d.happyPrice=parseFloat(inp.value)||0; });
-      page.appendChild(el("div",{class:"admin-row"},[
-        el("span",{style:{fontSize:"20px"}},[d.emoji]),
-        el("div",{style:{flex:"1"}},[el("div",{style:{fontSize:"13px",fontWeight:"bold",color:d.color}},[d.name])]),
-        el("div",{class:"price-box"},[el("span",{style:{color:"#10b981",fontWeight:"bold"}},["$"]),inp])
-      ]));
-    });
-  }
-
-  if(adminSection==="warnings"){
-    page.appendChild(el("div",{class:"section-label"},["STD DRINKS WARNING"]));
-    const si=el("input",{type:"number",min:"1",max:"20",class:"price-input",style:{width:"60px",background:"#161e2e",border:"1px solid #2a3a50",borderRadius:"8px",padding:"6px 10px"}});
-    si.value=stdWarnAt;
-    si.addEventListener("change",()=>{ stdWarnAt=parseInt(si.value)||4; });
-    page.appendChild(el("div",{class:"admin-row"},[el("span",{style:{flex:"1",color:"#aaa"}},["Warn after std drinks:"]),si]));
-
-    page.appendChild(el("div",{class:"section-label"},["SPENDING WARNING"]));
-    const sp=el("input",{type:"number",min:"1",class:"price-input",style:{width:"60px",background:"#161e2e",border:"1px solid #2a3a50",borderRadius:"8px",padding:"6px 10px"}});
-    sp.value=spendWarnAt;
-    sp.addEventListener("change",()=>{ spendWarnAt=parseInt(sp.value)||50; });
-    page.appendChild(el("div",{class:"admin-row"},[el("span",{style:{flex:"1",color:"#aaa"}},["Warn after spending $:"]),sp]));
-
-    const lastBtn=el("button",{class:"btn-red"},["📯 Trigger Last Drinks Now"]);
-    lastBtn.onclick=lastDrinks;
-    page.appendChild(lastBtn);
-  }
-
-  if(adminSection==="members"){
-    page.appendChild(el("div",{class:"section-label"},["REMOVE MEMBERS"]));
-    (roomData?.shoutOrder||[]).forEach(m=>{
-      const rmv=el("button",{class:"remove-btn"},["Remove"]);
-      rmv.onclick=()=>removeMember(m);
-      page.appendChild(el("div",{class:"admin-row"},[
-        el("span",{style:{flex:"1",color:"#f0f0f0"}},["👤 "+m]),rmv
-      ]));
-    });
-    page.appendChild(el("div",{class:"section-label"},["SESSION"]));
-    const clr=el("button",{class:"btn-outline",style:{marginBottom:"8px"}},["🗑 Clear All Drink History"]);
-    clr.onclick=clearRoom; page.appendChild(clr);
-    const leave=el("button",{class:"btn-outline"},["🚪 Leave Session"]);
-    leave.onclick=()=>{ screen="home"; roomCode=""; roomData={}; isAdmin=false; render(); };
-    page.appendChild(leave);
-  }
-
-  if(adminSection==="password"){
-    page.appendChild(el("div",{class:"section-label"},["CHANGE ADMIN PASSWORD"]));
-    const inp=el("input",{type:"password",class:"input",placeholder:"New password..."});
-    const btn=el("button",{class:"btn-gold"},["Update Password"]);
-    btn.onclick=()=>{ if(inp.value.trim()){ adminPass=inp.value.trim(); inp.value=""; alert("Password updated!"); }};
-    page.appendChild(inp); page.appendChild(btn);
-  }
-
-  const lock=el("button",{class:"btn-outline",style:{marginTop:"20px",color:"#ef4444",borderColor:"#333"}},["🔒 Lock Admin"]);
-  lock.onclick=()=>{ isAdmin=false; currentTab="session"; render(); };
-  page.appendChild(lock);
-}
-
-function makeDrinkBtn(d, onClick){
+function makeDrinkBtn(d,onClick){
   const price=happyHour?d.happyPrice:d.price;
-  const priceEl=el("div",{style:{textAlign:"right"}},[
+  const priceDiv=el("div",{style:{textAlign:"right"}},[
     el("div",{style:{fontSize:"16px",fontWeight:"bold",color:(happyHour&&d.happyPrice<d.price)?"#10b981":"#f0f0f0"}},[fmtMoney(price)])
   ]);
-  if(happyHour&&d.happyPrice<d.price){
-    priceEl.appendChild(el("div",{style:{fontSize:"10px",color:"#555",textDecoration:"line-through"}},[fmtMoney(d.price)]));
-  }
-  const btn=el("div",{class:"drink-btn",style:{background:`linear-gradient(135deg,${d.color}33,${d.color}11)`,borderColor:d.color,gap:"10px",cursor:"pointer"}},[
+  if(happyHour&&d.happyPrice<d.price) priceDiv.appendChild(el("div",{style:{fontSize:"10px",color:"#555",textDecoration:"line-through"}},[fmtMoney(d.price)]));
+  const btn=el("div",{class:"drink-btn",style:{background:`linear-gradient(135deg,${d.color}33,${d.color}11)`,borderColor:d.color}},[
     el("span",{class:"drink-emoji"},[d.emoji]),
     el("div",{class:"drink-mid"},[
       el("span",{class:"drink-name",style:{color:d.color}},[d.name]),
       el("span",{class:"drink-sub"},[d.size+" · "+d.calories+" cal · "+d.std+" std"])
     ]),
-    priceEl
+    priceDiv
   ]);
   btn.onclick=onClick;
   return btn;
 }
 
-function makeLogRow(e,d,member,onBell,showMember){
+function makeLogRow(e,d,member,onBell){
   const nameEl=el("div",{class:"log-name"+(e.done?" done":""),style:{color:d.color}},[d.name]);
-  if(member||showMember) nameEl.appendChild(el("span",{class:"log-member"},[member||""]));
+  if(member) nameEl.appendChild(el("span",{class:"log-member"},[member]));
   const row=el("div",{class:"log-row"+(e.done?" done":"")},[
     el("span",{class:"log-emoji"},[d.emoji]),
     nameEl,
@@ -857,16 +379,229 @@ function makeLogRow(e,d,member,onBell,showMember){
   return row;
 }
 
-// ── CLOCK + HAPPY HOUR ────────────────────────────────────────────────────────
+function makeStatRow(stats){
+  const row=el("div",{class:"stat-row"},[]);
+  stats.forEach(([l,v,c])=>{
+    row.appendChild(el("div",{class:"stat-box",style:{borderTop:`3px solid ${c}`}},[
+      el("div",{class:"stat-val",style:{color:c}},[String(v)]),
+      el("div",{class:"stat-lbl"},[l])
+    ]));
+  });
+  return row;
+}
+
+// ── RENDER ────────────────────────────────────────────────────────────────────
+function render(){
+  const root=document.getElementById("app");
+  root.innerHTML="";
+  if(screen==="name"){ root.appendChild(renderName()); return; }
+  if(screen==="home"){ root.appendChild(renderHome()); return; }
+  root.appendChild(renderMain());
+}
+
+function renderName(){
+  const inp=el("input",{class:"input",placeholder:"Your name...",type:"text"});
+  const btn=el("button",{class:"btn-gold"},["Let's Go 🍻"]);
+  btn.onclick=()=>{ if(inp.value.trim()){ userName=inp.value.trim(); localStorage.setItem("dt_name",userName); screen="home"; render(); }};
+  inp.addEventListener("keydown",e=>{ if(e.key==="Enter") btn.click(); });
+  const d=el("div",{class:"gate"},[el("div",{class:"gate-beer"},["🍺"]),el("div",{class:"gate-title"},["Drink Tracker"]),el("div",{class:"gate-sub"},["Enter your name to get started"]),inp,btn]);
+  setTimeout(()=>inp.focus(),50);
+  return d;
+}
+
+function renderHome(){
+  const timeStr=nowDate.toLocaleTimeString([],{hour:"2-digit",minute:"2-digit"});
+  const dateStr=`${dayNames[nowDate.getDay()]} ${nowDate.toLocaleDateString("en-AU",{day:"numeric",month:"short",year:"numeric"})}`;
+  const dateEl=el("div",{class:"date-bar"},[dateStr+" · "+timeStr]);
+  if(happyHour) dateEl.appendChild(el("span",{class:"happy-badge"},[" 🍺 HAPPY HOUR!"]));
+  const roomInp=el("input",{class:"input",placeholder:"Enter room code...",maxlength:"7",style:{textTransform:"uppercase",marginBottom:"4px"}});
+  roomInp.addEventListener("input",()=>roomInp.value=roomInp.value.toUpperCase());
+  const createBtn=el("button",{class:"btn-gold"},["+ Create New Session"]);
+  createBtn.onclick=createRoom;
+  const joinBtn=el("button",{class:"btn-outline"},["Join Session"]);
+  joinBtn.onclick=()=>joinRoom(roomInp.value);
+  roomInp.addEventListener("keydown",e=>{ if(e.key==="Enter") joinBtn.click(); });
+  const changeBtn=el("button",{class:"link-btn"},["Not "+userName+"? Change name"]);
+  changeBtn.onclick=()=>{ userName=""; localStorage.removeItem("dt_name"); screen="name"; render(); };
+  return el("div",{class:"gate"},[el("div",{class:"gate-beer"},["🍺"]),el("div",{class:"gate-title"},["Drink Tracker"]),el("div",{class:"gate-sub"},["G'day "+userName+"!"]),dateEl,createBtn,el("div",{class:"or-div"},["— or join existing —"]),roomInp,joinBtn,changeBtn]);
+}
+
+function renderMain(){
+  const wrap=el("div",{});
+  if(showHappyNotif){
+    const close=el("button",{style:{background:"transparent",border:"none",color:"#6ee7b7",fontSize:"16px"}},["✕"]);
+    close.onclick=()=>{ showHappyNotif=false; render(); };
+    wrap.appendChild(el("div",{class:"happy-notif"},["🍺 HAPPY HOUR! Beer prices have dropped to $5.50! ",close]));
+  }
+  // Header
+  const timeStr=nowDate.toLocaleTimeString([],{hour:"2-digit",minute:"2-digit"});
+  const dateStr=`${dayNames[nowDate.getDay()]} ${nowDate.toLocaleDateString("en-AU",{day:"numeric",month:"short",year:"numeric"})}`;
+  const gear=el("button",{class:"gear-btn"},["⚙️"]);
+  gear.onclick=()=>{ if(isAdmin){ currentTab="admin"; render(); } else showAdminModal(); };
+  const sub=el("div",{class:"header-sub"},[]);
+  sub.appendChild(el("span",{class:"room-code"},["#"+roomCode]));
+  sub.appendChild(document.createTextNode(" · "+userName));
+  if(happyHour) sub.appendChild(el("span",{class:"happy-tag"},[" · 🍺 Happy Hour!"]));
+  wrap.appendChild(el("div",{class:"header"},[
+    el("div",{},[el("div",{class:"header-title"},["🍺 Drink Tracker"]),sub]),
+    el("div",{style:{display:"flex",alignItems:"center",gap:"6px"}},[
+      el("div",{class:"clock-box"},[el("div",{class:"clock-time"},[timeStr]),el("div",{class:"clock-date"},[dateStr])]),
+      gear
+    ])
+  ]));
+  // Tabs
+  const tabBar=el("div",{class:"tab-bar"},[]);
+  [["session","🍺 My Drinks"],["shout","🔔 The Shout"],["history","📋 History"]].forEach(([t,label])=>{
+    const btn=el("button",{class:"tab-btn"+(t===currentTab?" active":"")},[label]);
+    btn.onclick=()=>{ currentTab=t; render(); };
+    tabBar.appendChild(btn);
+  });
+  wrap.appendChild(tabBar);
+  const page=el("div",{class:"page"},[]);
+  if(currentTab==="session") renderSession(page);
+  else if(currentTab==="shout") renderShout(page);
+  else if(currentTab==="history") renderHistory(page);
+  else if(currentTab==="admin"&&isAdmin) renderAdmin(page);
+  wrap.appendChild(page);
+  const back=el("div",{class:"bottom-bar"},[]);
+  const backBtn=el("button",{class:"link-btn"},["← Back to Lobby"]);
+  backBtn.onclick=()=>{ screen="home"; roomCode=""; roomData={}; isAdmin=false; render(); };
+  back.appendChild(backBtn);
+  wrap.appendChild(back);
+  return wrap;
+}
+
+function renderSession(page){
+  const myLog=getMyLog(), mt=totals(myLog);
+  page.appendChild(makeStatRow([["Spent",fmtMoney(mt.spent),"#f59e0b"],["Calories",Math.round(mt.cal),"#ef4444"],["Std Drinks",mt.std.toFixed(1),"#3b82f6"],["My Drinks",myLog.length,"#10b981"]]));
+  if(mt.std>=stdWarnAt) page.appendChild(el("div",{class:"warn"},["⚠️ "+mt.std.toFixed(1)+" standard drinks — please be careful"]));
+  if(mt.spent>=spendWarnAt) page.appendChild(el("div",{class:"warn"},["💸 You've spent "+fmtMoney(mt.spent)+" tonight"]));
+  if(happyHour) page.appendChild(el("div",{class:"happy-bar"},["🍺 Happy Hour — Beers are $5.50!"]));
+  page.appendChild(el("div",{class:"section-label"},["TAP TO ADD YOUR DRINK"]));
+  drinks.forEach(d=>page.appendChild(makeDrinkBtn(d,()=>addDrink(d.id))));
+  if(myLog.length>0){
+    page.appendChild(el("div",{class:"section-label"},["MY LOG — TAP 🔔 WHEN FINISHED"]));
+    [...myLog].reverse().forEach(([key,e])=>{ const d=drinks.find(x=>x.id===e.drinkId); if(d) page.appendChild(makeLogRow(e,d,null,()=>markDone(key))); });
+  }
+  const lb=el("button",{class:"btn-red"},["📯 LAST DRINKS!"]); lb.onclick=lastDrinks; page.appendChild(lb);
+}
+
+function renderShout(page){
+  const allLog=getAllLog(), at=totals(allLog);
+  const shoutOrder=roomData?.shoutOrder||[], currentShout=roomData?.currentShout||0, roundCount=roomData?.roundCount||0;
+  page.appendChild(makeStatRow([["Group $",fmtMoney(at.spent),"#f59e0b"],["Calories",Math.round(at.cal),"#ef4444"],["Rounds",roundCount,"#a78bfa"],["Drinks",allLog.length,"#10b981"]]));
+  if(shoutOrder.length>0){
+    const nb=el("button",{class:"next-btn"},["Next →"]); nb.onclick=nextShout;
+    page.appendChild(el("div",{class:"shout-banner"},[el("div",{},[el("div",{class:"shout-who"},["🔔 "+shoutOrder[currentShout]+"'s shout!"]),el("div",{class:"shout-round"},["Round "+(roundCount+1)])]),nb]));
+  }
+  if(shoutOrder.length>1){
+    const sb=el("button",{class:"spin-btn"},[spinning?"🎲 "+spinResult+"...":"🎲 Spin for First Shout!"]);
+    sb.onclick=spinForFirst; sb.disabled=spinning;
+    const spinBox=el("div",{class:"spin-box"},[sb]);
+    if(spinResult&&!spinning) spinBox.appendChild(el("div",{class:"spin-result"},["🎉 "+spinResult+" goes first!"]));
+    page.appendChild(spinBox);
+  }
+  page.appendChild(el("div",{class:"section-label"},["WHO'S IN THE SHOUT?"]));
+  const mi=el("input",{class:"input",placeholder:"Add member...",style:{flex:"1",marginBottom:"0",padding:"10px 12px"}});
+  const ab=el("button",{class:"member-add-btn"},["+ Add"]);
+  ab.onclick=()=>{ addMember(mi.value); mi.value=""; };
+  mi.addEventListener("keydown",e=>{ if(e.key==="Enter") ab.click(); });
+  page.appendChild(el("div",{class:"member-add-row"},[mi,ab]));
+  const chips=el("div",{class:"chips"},[]);
+  shoutOrder.forEach((m,i)=>{
+    const chip=el("div",{class:"chip"+(i===currentShout?" active":"")},[m]);
+    if(isAdmin){ const x=el("span",{class:"chip-x"},["×"]); x.onclick=()=>removeMember(m); chip.appendChild(x); }
+    chips.appendChild(chip);
+  });
+  page.appendChild(chips);
+  const hist=getShoutHistory();
+  if(hist.length>0){
+    page.appendChild(el("div",{class:"section-label"},["SHOUT HISTORY"]));
+    const he=el("div",{class:"shout-hist"},[]);
+    hist.slice(0,10).forEach(h=>he.appendChild(el("div",{class:"shout-hist-row"},[el("span",{style:{color:"#f59e0b"}},[h.name]),el("span",{style:{fontSize:"11px",color:"#555"}},[fmtClock(h.time)])])));
+    page.appendChild(he);
+  }
+  if(allLog.length>0){
+    page.appendChild(el("div",{class:"section-label"},["GROUP LOG — TAP 🔔 WHEN FINISHED"]));
+    [...allLog].reverse().forEach(([key,e])=>{ const d=drinks.find(x=>x.id===e.drinkId); if(d) page.appendChild(makeLogRow(e,d,e.member,()=>markDone(key))); });
+  }
+  const lb=el("button",{class:"btn-red"},["📯 LAST DRINKS!"]); lb.onclick=lastDrinks; page.appendChild(lb);
+}
+
+function renderHistory(page){
+  const log=getLog();
+  if(log.length===0){ page.appendChild(el("div",{class:"empty"},["No drinks logged yet this session."])); return; }
+  page.appendChild(el("div",{class:"section-label"},["THIS SESSION — ALL DRINKS"]));
+  [...log].reverse().forEach(([key,e])=>{
+    if(e.drinkId==="LASTDRINKS"){ page.appendChild(el("div",{class:"last-drinks-row"},["📯 LAST DRINKS called at "+fmtClock(e.timestamp)])); return; }
+    const d=drinks.find(x=>x.id===e.drinkId); if(d) page.appendChild(makeLogRow(e,d,e.member,null));
+  });
+  if(isAdmin){ const cb=el("button",{class:"btn-outline",style:{marginTop:"16px",color:"#ef4444",borderColor:"#ef4444"}},["🗑 Clear Session History"]); cb.onclick=clearRoom; page.appendChild(cb); }
+}
+
+function renderAdmin(page){
+  page.appendChild(el("div",{style:{fontSize:"18px",fontWeight:"bold",color:"#f59e0b",marginBottom:"14px"}},["⚙️ Admin Panel"]));
+  const tabsEl=el("div",{class:"admin-tabs"},[]);
+  [["prices","💰 Prices"],["happyhour","🍺 Happy Hour"],["warnings","⚠️ Warnings"],["members","👥 Members"],["password","🔒 Password"]].forEach(([k,label])=>{
+    const b=el("button",{class:"admin-tab"+(adminSection===k?" active":"")},[label]);
+    b.onclick=()=>{ adminSection=k; render(); };
+    tabsEl.appendChild(b);
+  });
+  page.appendChild(tabsEl);
+  if(adminSection==="prices"){
+    drinks.forEach(d=>{
+      const inp=el("input",{type:"number",step:"0.10",min:"0",class:"price-input"}); inp.value=d.price;
+      inp.addEventListener("change",()=>{ d.price=parseFloat(inp.value)||0; });
+      page.appendChild(el("div",{class:"admin-row"},[el("span",{style:{fontSize:"20px"}},[d.emoji]),el("div",{style:{flex:"1"}},[el("div",{style:{fontSize:"13px",fontWeight:"bold",color:d.color}},[d.name]),el("div",{style:{fontSize:"10px",color:"#555"}},[d.size])]),el("div",{class:"price-box"},[el("span",{style:{color:"#f59e0b",fontWeight:"bold"}},["$"]),inp])]));
+    });
+  }
+  if(adminSection==="happyhour"){
+    page.appendChild(el("div",{class:"section-label"},["HAPPY HOUR BEER PRICES"]));
+    drinks.filter(d=>["hahn","tooheysnew","tooheyold","vb","xxxx"].includes(d.id)).forEach(d=>{
+      const inp=el("input",{type:"number",step:"0.10",min:"0",class:"price-input"}); inp.value=d.happyPrice;
+      inp.addEventListener("change",()=>{ d.happyPrice=parseFloat(inp.value)||0; });
+      page.appendChild(el("div",{class:"admin-row"},[el("span",{style:{fontSize:"20px"}},[d.emoji]),el("div",{style:{flex:"1"}},[el("div",{style:{fontSize:"13px",fontWeight:"bold",color:d.color}},[d.name])]),el("div",{class:"price-box"},[el("span",{style:{color:"#10b981",fontWeight:"bold"}},["$"]),inp])]));
+    });
+  }
+  if(adminSection==="warnings"){
+    page.appendChild(el("div",{class:"section-label"},["STD DRINKS WARNING"]));
+    const si=el("input",{type:"number",min:"1",max:"20",class:"price-input",style:{width:"60px",background:"#161e2e",border:"1px solid #2a3a50",borderRadius:"8px",padding:"6px 10px"}}); si.value=stdWarnAt;
+    si.addEventListener("change",()=>{ stdWarnAt=parseInt(si.value)||4; });
+    page.appendChild(el("div",{class:"admin-row"},[el("span",{style:{flex:"1",color:"#aaa"}},["Warn after std drinks:"]),si]));
+    page.appendChild(el("div",{class:"section-label"},["SPENDING WARNING"]));
+    const sp=el("input",{type:"number",min:"1",class:"price-input",style:{width:"60px",background:"#161e2e",border:"1px solid #2a3a50",borderRadius:"8px",padding:"6px 10px"}}); sp.value=spendWarnAt;
+    sp.addEventListener("change",()=>{ spendWarnAt=parseInt(sp.value)||50; });
+    page.appendChild(el("div",{class:"admin-row"},[el("span",{style:{flex:"1",color:"#aaa"}},["Warn after spending $:"]),sp]));
+    const lb=el("button",{class:"btn-red"},["📯 Trigger Last Drinks Now"]); lb.onclick=lastDrinks; page.appendChild(lb);
+  }
+  if(adminSection==="members"){
+    page.appendChild(el("div",{class:"section-label"},["REMOVE MEMBERS"]));
+    (roomData?.shoutOrder||[]).forEach(m=>{ const rb=el("button",{class:"remove-btn"},["Remove"]); rb.onclick=()=>removeMember(m); page.appendChild(el("div",{class:"admin-row"},[el("span",{style:{flex:"1",color:"#f0f0f0"}},["👤 "+m]),rb])); });
+    page.appendChild(el("div",{class:"section-label"},["SESSION"]));
+    const cb=el("button",{class:"btn-outline",style:{marginBottom:"8px"}},["🗑 Clear All Drink History"]); cb.onclick=clearRoom; page.appendChild(cb);
+    const lb=el("button",{class:"btn-outline"},["🚪 Leave Session"]); lb.onclick=()=>{ screen="home"; roomCode=""; roomData={}; isAdmin=false; render(); }; page.appendChild(lb);
+  }
+  if(adminSection==="password"){
+    page.appendChild(el("div",{class:"section-label"},["CHANGE ADMIN PASSWORD"]));
+    const inp=el("input",{type:"password",class:"input",placeholder:"New password..."});
+    const btn=el("button",{class:"btn-gold"},["Update Password"]);
+    btn.onclick=()=>{ if(inp.value.trim()){ adminPass=inp.value.trim(); inp.value=""; alert("Password updated! Note: this resets if you refresh the page."); }};
+    page.appendChild(inp); page.appendChild(btn);
+  }
+  const lock=el("button",{class:"btn-outline",style:{marginTop:"20px",color:"#ef4444",borderColor:"#333"}},["🔒 Lock Admin"]);
+  lock.onclick=()=>{ isAdmin=false; currentTab="session"; render(); };
+  page.appendChild(lock);
+}
+
+// ── CLOCK ─────────────────────────────────────────────────────────────────────
 setInterval(()=>{
   nowDate=new Date();
   const happy=isHappyHour();
-  if(happy&&!prevHappy){ showHappyNotif=true; }
+  if(happy&&!prevHappy) showHappyNotif=true;
   prevHappy=happy; happyHour=happy;
-  if(screen==="session") render();
+  if(screen==="session"||screen==="home") render();
 },10000);
 
-// ── INIT ──────────────────────────────────────────────────────────────────────
 render();
 </script>
 </body>
