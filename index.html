@@ -35,8 +35,8 @@
     .room-code { color: #d97706; font-weight: bold; font-size: 13px; }
     .happy-tag { color: #059669; font-weight: bold; }
     .clock-box { text-align: right; }
-    .gear-btn, .help-btn { background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px; padding: 6px 10px; font-size: 16px; margin-left: 6px; }
-    .help-btn { background: #fffbeb; border-color: #fcd34d; color: #d97706; font-weight: bold; }
+    .gear-btn { background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px; padding: 6px 10px; font-size: 16px; margin-left: 4px; }
+    .help-btn { background: #fffbeb; border: 1px solid #fcd34d; border-radius: 8px; padding: 6px 10px; font-size: 14px; font-weight: bold; color: #d97706; margin-left: 4px; }
 
     .tab-bar { display: flex; border-bottom: 1px solid #e5e7eb; background: #fff; }
     .tab-btn { flex: 1; background: transparent; border: none; border-bottom: 3px solid transparent; color: #9ca3af; padding: 12px 4px; font-size: 11px; font-weight: bold; transition: all 0.2s; }
@@ -54,20 +54,27 @@
     .happy-bar { background: #ecfdf5; border: 2px solid #059669; border-radius: 10px; padding: 9px 14px; font-size: 13px; color: #059669; margin-bottom: 10px; text-align: center; font-weight: bold; }
     .happy-notif { background: #ecfdf5; border-bottom: 2px solid #059669; padding: 12px 16px; font-size: 13px; color: #059669; display: flex; justify-content: space-between; align-items: center; font-weight: bold; }
 
+    /* Category tabs */
+    .cat-tabs { display: flex; gap: 6px; margin-bottom: 12px; flex-wrap: wrap; }
+    .cat-tab { background: #f3f4f6; border: 2px solid #e5e7eb; border-radius: 20px; padding: 7px 14px; font-size: 13px; font-weight: bold; color: #555; transition: all 0.15s; }
+    .cat-tab.active { background: #fffbeb; border-color: #d97706; color: #d97706; }
+
+    /* Drink buttons */
     .drink-row { display: flex; align-items: stretch; gap: 0; margin-bottom: 8px; }
-    .drink-btn { flex: 1; border-radius: 14px 0 0 14px; padding: 13px 14px; display: flex; align-items: center; gap: 10px; text-align: left; border-width: 2px; border-style: solid; border-right: none; background: #fff; cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,0.07); transition: transform 0.1s; }
+    .drink-btn { flex: 1; border-radius: 14px 0 0 14px; padding: 11px 12px; display: flex; align-items: center; gap: 10px; text-align: left; border-width: 2px; border-style: solid; border-right: none; background: #fff; cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,0.07); transition: transform 0.1s; }
     .drink-btn:active { transform: scale(0.98); }
-    .drink-edit-btn { border-radius: 0 14px 14px 0; padding: 0 14px; border-width: 2px; border-style: solid; border-left: 1px solid rgba(0,0,0,0.08); background: #f9fafb; display: flex; align-items: center; justify-content: center; font-size: 16px; color: #9ca3af; box-shadow: 0 2px 6px rgba(0,0,0,0.07); }
+    .drink-edit-btn { border-radius: 0 14px 14px 0; padding: 0 12px; border-width: 2px; border-style: solid; border-left: 1px solid rgba(0,0,0,0.08); background: #f9fafb; display: flex; align-items: center; justify-content: center; font-size: 15px; box-shadow: 0 2px 6px rgba(0,0,0,0.07); }
     .drink-edit-btn:active { background: #f3f4f6; }
-    .drink-emoji { font-size: 26px; flex-shrink: 0; }
+    .drink-emoji { font-size: 22px; flex-shrink: 0; }
     .drink-mid { flex: 1; text-align: left; }
-    .drink-name { font-size: 15px; font-weight: bold; display: block; color: #1a1a2e; }
-    .drink-sub { font-size: 10px; color: #9ca3af; display: block; margin-top: 2px; }
-    .drink-price-wrap { text-align: right; }
-    .drink-price { font-size: 17px; font-weight: bold; color: #1a1a2e; }
-    .drink-happy-price { font-size: 17px; font-weight: bold; color: #059669; }
+    .drink-name { font-size: 14px; font-weight: bold; display: block; color: #1a1a2e; }
+    .drink-sub { font-size: 10px; color: #9ca3af; display: block; margin-top: 1px; }
+    .drink-price-wrap { text-align: right; flex-shrink: 0; }
+    .drink-price { font-size: 15px; font-weight: bold; color: #1a1a2e; }
+    .drink-happy-price { font-size: 15px; font-weight: bold; color: #059669; }
     .drink-old-price { font-size: 10px; color: #bbb; text-decoration: line-through; }
 
+    /* Log */
     .log-row { display: flex; align-items: center; gap: 8px; background: #fff; border-radius: 12px; padding: 10px 12px; margin-bottom: 6px; border: 1px solid #e5e7eb; box-shadow: 0 1px 3px rgba(0,0,0,0.05); transition: opacity 0.3s; }
     .log-row.done { opacity: 0.4; }
     .log-emoji { font-size: 18px; }
@@ -110,17 +117,12 @@
     .err-text { color: #dc2626; font-size: 12px; text-align: center; display: none; font-weight: bold; }
     .modal-btns { display: flex; gap: 8px; margin-top: 4px; }
 
-    /* Help popup */
     .help-popup { background: #fff; border-radius: 20px; padding: 24px; width: 100%; max-width: 420px; max-height: 85vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.2); display: flex; flex-direction: column; gap: 16px; }
     .help-title { font-size: 20px; font-weight: bold; color: #d97706; text-align: center; }
     .help-section { background: #f9fafb; border-radius: 12px; padding: 14px 16px; border: 1px solid #e5e7eb; }
-    .help-section-title { font-size: 13px; font-weight: bold; color: #d97706; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
-    .help-item { font-size: 13px; color: #444; margin-bottom: 6px; line-height: 1.5; padding-left: 4px; }
+    .help-section-title { font-size: 13px; font-weight: bold; color: #d97706; margin-bottom: 8px; }
+    .help-item { font-size: 13px; color: #444; margin-bottom: 6px; line-height: 1.5; }
     .help-item:last-child { margin-bottom: 0; }
-    .help-badge { display: inline-block; background: #fffbeb; border: 1px solid #fcd34d; border-radius: 6px; padding: 1px 6px; font-size: 11px; font-weight: bold; color: #d97706; margin-right: 4px; }
-    .help-badge-green { background: #ecfdf5; border-color: #6ee7b7; color: #059669; }
-    .help-badge-red { background: #fef2f2; border-color: #fca5a5; color: #dc2626; }
-    .help-badge-purple { background: #f5f3ff; border-color: #c4b5fd; color: #7c3aed; }
 
     .empty { text-align: center; color: #9ca3af; padding: 60px 20px; font-size: 14px; line-height: 2; }
     .member-add-row { display: flex; gap: 8px; margin-bottom: 10px; }
@@ -160,19 +162,55 @@ const FIREBASE_CONFIG = {
   appId: "1:27005216782:web:9bebbfe9cfe13925baf45f"
 };
 
-const DEFAULT_DRINKS = [
-  { id:"hahn",       name:"Hahn Super Dry",  emoji:"🍺", size:"Schooner 425ml", price:7.60, happyPrice:5.50, calories:114, std:1.2, color:"#C8102E" },
-  { id:"tooheysnew", name:"Tooheys New",      emoji:"🍺", size:"Schooner 425ml", price:7.60, happyPrice:5.50, calories:120, std:1.2, color:"#003087" },
-  { id:"tooheyold",  name:"Tooheys Old",      emoji:"🍺", size:"Schooner 425ml", price:7.60, happyPrice:5.50, calories:125, std:1.2, color:"#8B4513" },
-  { id:"vb",         name:"VB",               emoji:"🍺", size:"Schooner 425ml", price:7.60, happyPrice:5.50, calories:118, std:1.2, color:"#c8960c" },
-  { id:"xxxx",       name:"XXXX Gold",        emoji:"🍺", size:"Schooner 425ml", price:7.60, happyPrice:5.50, calories:116, std:1.2, color:"#b45309" },
-  { id:"jimbeam",    name:"Jim Beam Cola",    emoji:"🥃", size:"UDL Can 375ml",  price:9.50, happyPrice:9.50, calories:228, std:1.5, color:"#991b1b" },
-  { id:"rumcola",    name:"Rum & Cola",       emoji:"🧃", size:"UDL Can 375ml",  price:9.50, happyPrice:9.50, calories:210, std:1.5, color:"#92400e" },
-  { id:"scotchudl",  name:"Scotch & Cola",    emoji:"🥃", size:"UDL Can 375ml",  price:9.50, happyPrice:9.50, calories:220, std:1.5, color:"#78350f" },
-  { id:"scotch7oz",  name:"Scotch & Coke",    emoji:"🥃", size:"7oz Glass",      price:8.00, happyPrice:8.00, calories:130, std:1.0, color:"#451a03" },
+// ── DRINK MENU ─────────────────────────────────────────────────────────────
+const CATEGORIES = [
+  { id:"beer",  label:"🍺 Beers",   color:"#d97706" },
+  { id:"udl",   label:"🥃 UDLs",    color:"#991b1b" },
+  { id:"spirit",label:"🍹 Spirits", color:"#7c3aed" },
+  { id:"wine",  label:"🍷 Wine",    color:"#9f1239" },
+  { id:"soft",  label:"🥤 Soft",    color:"#0369a1" },
+];
+
+const ALL_DRINKS = [
+  // BEERS
+  { id:"hahn",        cat:"beer",   name:"Hahn Super Dry",     emoji:"🍺", size:"Schooner 425ml", price:7.60, happyPrice:5.50, calories:114, std:1.2, color:"#C8102E" },
+  { id:"tooheysnew",  cat:"beer",   name:"Tooheys New",        emoji:"🍺", size:"Schooner 425ml", price:7.60, happyPrice:5.50, calories:120, std:1.2, color:"#003087" },
+  { id:"tooheyold",   cat:"beer",   name:"Tooheys Old",        emoji:"🍺", size:"Schooner 425ml", price:7.60, happyPrice:5.50, calories:125, std:1.2, color:"#8B4513" },
+  { id:"vb",          cat:"beer",   name:"VB",                 emoji:"🍺", size:"Schooner 425ml", price:7.60, happyPrice:5.50, calories:118, std:1.2, color:"#c8960c" },
+  { id:"xxxx",        cat:"beer",   name:"XXXX Gold",          emoji:"🍺", size:"Schooner 425ml", price:7.60, happyPrice:5.50, calories:116, std:1.2, color:"#b45309" },
+  { id:"carlton",     cat:"beer",   name:"Carlton Dry",        emoji:"🍺", size:"Schooner 425ml", price:7.60, happyPrice:5.50, calories:110, std:1.2, color:"#1d4ed8" },
+  { id:"greatnorth",  cat:"beer",   name:"Great Northern",     emoji:"🍺", size:"Schooner 425ml", price:7.60, happyPrice:5.50, calories:100, std:1.1, color:"#065f46" },
+  { id:"coopers",     cat:"beer",   name:"Coopers Pale Ale",   emoji:"🍺", size:"Schooner 425ml", price:8.00, happyPrice:6.00, calories:138, std:1.4, color:"#92400e" },
+  { id:"peroni",      cat:"beer",   name:"Peroni",             emoji:"🍺", size:"Schooner 425ml", price:8.50, happyPrice:6.50, calories:122, std:1.2, color:"#15803d" },
+  { id:"jamessquire", cat:"beer",   name:"James Squire",       emoji:"🍺", size:"Schooner 425ml", price:9.00, happyPrice:7.00, calories:145, std:1.4, color:"#78350f" },
+  // UDLs
+  { id:"jimbeam",     cat:"udl",    name:"Jim Beam Cola",      emoji:"🥃", size:"Can 375ml",      price:9.50, happyPrice:9.50, calories:228, std:1.5, color:"#991b1b" },
+  { id:"rumcola",     cat:"udl",    name:"Rum & Cola",         emoji:"🥃", size:"Can 375ml",      price:9.50, happyPrice:9.50, calories:210, std:1.5, color:"#92400e" },
+  { id:"scotchudl",   cat:"udl",    name:"Scotch & Cola",      emoji:"🥃", size:"Can 375ml",      price:9.50, happyPrice:9.50, calories:220, std:1.5, color:"#78350f" },
+  { id:"jackdaniels", cat:"udl",    name:"Jack Daniel's Cola", emoji:"🥃", size:"Can 375ml",      price:9.50, happyPrice:9.50, calories:230, std:1.5, color:"#1c1917" },
+  { id:"bundy",       cat:"udl",    name:"Bundaberg Rum Cola", emoji:"🥃", size:"Can 375ml",      price:9.50, happyPrice:9.50, calories:215, std:1.5, color:"#7c2d12" },
+  { id:"woodstock",   cat:"udl",    name:"Woodstock",          emoji:"🥃", size:"Can 375ml",      price:9.50, happyPrice:9.50, calories:225, std:1.5, color:"#713f12" },
+  { id:"cruiser",     cat:"udl",    name:"Vodka Cruiser",      emoji:"🍹", size:"Can 275ml",      price:9.00, happyPrice:9.00, calories:180, std:1.0, color:"#db2777" },
+  // SPIRITS
+  { id:"scotch7oz",   cat:"spirit", name:"Scotch & Coke",      emoji:"🥃", size:"7oz Glass",      price:8.00, happyPrice:8.00, calories:130, std:1.0, color:"#451a03" },
+  { id:"gin",         cat:"spirit", name:"Gin & Tonic",        emoji:"🍹", size:"Glass",          price:9.00, happyPrice:9.00, calories:120, std:1.0, color:"#0e7490" },
+  { id:"vodkasoda",   cat:"spirit", name:"Vodka Soda",         emoji:"🍹", size:"Glass",          price:9.00, happyPrice:9.00, calories:100, std:1.0, color:"#6366f1" },
+  { id:"bourbon",     cat:"spirit", name:"Bourbon & Dry",      emoji:"🥃", size:"Glass",          price:9.00, happyPrice:9.00, calories:135, std:1.0, color:"#92400e" },
+  { id:"tequila",     cat:"spirit", name:"Tequila Shot",       emoji:"🥃", size:"30ml",           price:7.00, happyPrice:7.00, calories:65,  std:1.0, color:"#a16207" },
+  // WINE
+  { id:"redwine",     cat:"wine",   name:"Red Wine",           emoji:"🍷", size:"Glass 150ml",    price:9.00, happyPrice:9.00, calories:125, std:1.6, color:"#9f1239" },
+  { id:"whitewine",   cat:"wine",   name:"White Wine",         emoji:"🥂", size:"Glass 150ml",    price:9.00, happyPrice:9.00, calories:120, std:1.6, color:"#ca8a04" },
+  { id:"rose",        cat:"wine",   name:"Rosé",               emoji:"🥂", size:"Glass 150ml",    price:9.00, happyPrice:9.00, calories:118, std:1.6, color:"#f472b6" },
+  { id:"sparkling",   cat:"wine",   name:"Sparkling Wine",     emoji:"🥂", size:"Glass 150ml",    price:9.50, happyPrice:9.50, calories:115, std:1.6, color:"#d97706" },
+  // SOFT DRINKS
+  { id:"coke",        cat:"soft",   name:"Coke",               emoji:"🥤", size:"Glass",          price:4.00, happyPrice:4.00, calories:140, std:0,   color:"#dc2626" },
+  { id:"lemon",       cat:"soft",   name:"Lemonade",           emoji:"🥤", size:"Glass",          price:4.00, happyPrice:4.00, calories:120, std:0,   color:"#ca8a04" },
+  { id:"water",       cat:"soft",   name:"Water",              emoji:"💧", size:"Bottle",         price:3.00, happyPrice:3.00, calories:0,   std:0,   color:"#0369a1" },
+  { id:"oj",          cat:"soft",   name:"Orange Juice",       emoji:"🥤", size:"Glass",          price:4.50, happyPrice:4.50, calories:110, std:0,   color:"#ea580c" },
 ];
 
 const HAPPY_DAYS=[5,6,0], HAPPY_START=16, HAPPY_END=18;
+const BEER_IDS=ALL_DRINKS.filter(d=>d.cat==="beer").map(d=>d.id);
 function isHappyHour(){ const n=new Date(); return HAPPY_DAYS.includes(n.getDay())&&n.getHours()>=HAPPY_START&&n.getHours()<HAPPY_END; }
 function fmtMoney(n){ return "$"+Number(n).toFixed(2); }
 function fmtClock(t){ return new Date(t).toLocaleTimeString([],{hour:"2-digit",minute:"2-digit"}); }
@@ -180,21 +218,23 @@ function genCode(){ return Math.random().toString(36).substring(2,7).toUpperCase
 const dayNames=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
 
 function playCowbell(){
-  try{ const ctx=new(window.AudioContext||window.webkitAudioContext)(); const play=(freq,start,dur,vol=0.4)=>{ const o=ctx.createOscillator(),g=ctx.createGain(); o.connect(g);g.connect(ctx.destination); o.type="square";o.frequency.value=freq; g.gain.setValueAtTime(vol,ctx.currentTime+start); g.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+start+dur); o.start(ctx.currentTime+start);o.stop(ctx.currentTime+start+dur); }; play(800,0,0.05,0.5);play(600,0.02,0.08,0.4);play(800,0.12,0.05,0.4);play(600,0.14,0.08,0.3);play(800,0.28,0.05,0.3);play(600,0.30,0.06,0.2); }catch{}
+  try{ const ctx=new(window.AudioContext||window.webkitAudioContext)(); const play=(f,s,d,v=0.4)=>{ const o=ctx.createOscillator(),g=ctx.createGain(); o.connect(g);g.connect(ctx.destination); o.type="square";o.frequency.value=f; g.gain.setValueAtTime(v,ctx.currentTime+s); g.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+s+d); o.start(ctx.currentTime+s);o.stop(ctx.currentTime+s+d); }; play(800,0,0.05,0.5);play(600,0.02,0.08,0.4);play(800,0.12,0.05,0.4);play(600,0.14,0.08,0.3);play(800,0.28,0.05,0.3);play(600,0.30,0.06,0.2); }catch{}
 }
 function playAirhorn(){
   try{ const ctx=new(window.AudioContext||window.webkitAudioContext)(); [233,311,466,554].forEach(freq=>{ const o=ctx.createOscillator(),g=ctx.createGain(),dist=ctx.createWaveShaper(); const curve=new Float32Array(256); for(let i=0;i<256;i++) curve[i]=i<128?-1:1; dist.curve=curve; o.connect(dist);dist.connect(g);g.connect(ctx.destination); o.type="sawtooth";o.frequency.value=freq; g.gain.setValueAtTime(0,ctx.currentTime); g.gain.linearRampToValueAtTime(0.3,ctx.currentTime+0.05); g.gain.setValueAtTime(0.3,ctx.currentTime+1.5); g.gain.linearRampToValueAtTime(0,ctx.currentTime+2.0); o.start();o.stop(ctx.currentTime+2.0); }); }catch{}
 }
 
+// ── STATE ──────────────────────────────────────────────────────────────────
 let db, roomCode="", roomData={}, screen="name";
 let userName=localStorage.getItem("dt_name")||"";
 let isAdmin=false, currentTab="session", adminSection="prices";
-let drinks=DEFAULT_DRINKS.map(d=>({...d}));
+let drinks=ALL_DRINKS.map(d=>({...d}));
 let adminPass="Sydneybuses1977";
 let stdWarnAt=4, spendWarnAt=50;
 let happyHour=isHappyHour(), prevHappy=isHappyHour(), showHappyNotif=false;
 let spinning=false, spinResult=null;
 let nowDate=new Date();
+let selectedCat="beer";
 if(userName) screen="home";
 
 const fbApp=initializeApp(FIREBASE_CONFIG);
@@ -211,7 +251,6 @@ function addMember(name){ if(!name.trim()) return; const order=[...(roomData?.sh
 function removeMember(name){ const order=(roomData?.shoutOrder||[]).filter(n=>n!==name); remove(ref(db,`rooms/${roomCode}/members/${name}`)); update(ref(db,`rooms/${roomCode}`),{shoutOrder:order}); }
 function clearRoom(){ update(ref(db,`rooms/${roomCode}`),{drinkLog:{},roundCount:0,currentShout:0,shoutHistory:{}}); }
 function lastDrinks(){ playAirhorn(); push(ref(db,`rooms/${roomCode}/drinkLog`),{drinkId:"LASTDRINKS",member:"SYSTEM",timestamp:Date.now(),price:0,calories:0,std:0,done:false}); }
-
 function getLog(){ return roomData?.drinkLog?Object.entries(roomData.drinkLog):[]; }
 function getMyLog(){ return getLog().filter(([,e])=>e.member===userName&&e.drinkId!=="LASTDRINKS"); }
 function getAllLog(){ return getLog().filter(([,e])=>e.drinkId!=="LASTDRINKS"); }
@@ -220,93 +259,39 @@ function getShoutHistory(){ return roomData?.shoutHistory?Object.values(roomData
 
 function updateClock(){
   nowDate=new Date();
-  const timeEl=document.getElementById("clock-time-el");
-  const dateEl=document.getElementById("clock-date-el");
-  if(timeEl) timeEl.textContent=nowDate.toLocaleTimeString([],{hour:"2-digit",minute:"2-digit"});
-  if(dateEl) dateEl.textContent=`${dayNames[nowDate.getDay()]} ${nowDate.toLocaleDateString("en-AU",{day:"numeric",month:"short",year:"numeric"})}`;
+  const te=document.getElementById("clock-time-el"), de=document.getElementById("clock-date-el");
+  if(te) te.textContent=nowDate.toLocaleTimeString([],{hour:"2-digit",minute:"2-digit"});
+  if(de) de.textContent=`${dayNames[nowDate.getDay()]} ${nowDate.toLocaleDateString("en-AU",{day:"numeric",month:"short",year:"numeric"})}`;
   const happy=isHappyHour();
   if(happy&&!prevHappy){ showHappyNotif=true; render(); }
   prevHappy=happy; happyHour=happy;
 }
 setInterval(updateClock,10000);
 
-// ── HELP POPUP ────────────────────────────────────────────────────────────────
+// ── HELP ──────────────────────────────────────────────────────────────────
 function showHelp(){
   const container=document.getElementById("help-container");
   container.style.display="block"; container.innerHTML="";
   const overlay=document.createElement("div"); overlay.className="overlay";
   overlay.onclick=(e)=>{ if(e.target===overlay){ container.style.display="none"; container.innerHTML=""; }};
-
   const popup=document.createElement("div"); popup.className="help-popup";
-
   const title=document.createElement("div"); title.className="help-title"; title.textContent="🍺 How to Use Drink Tracker";
-
-  function makeSection(emoji, heading, items){
-    const sec=document.createElement("div"); sec.className="help-section";
-    const h=document.createElement("div"); h.className="help-section-title"; h.textContent=emoji+" "+heading;
-    sec.appendChild(h);
-    items.forEach(item=>{
-      const p=document.createElement("div"); p.className="help-item"; p.innerHTML=item; sec.appendChild(p);
-    });
-    return sec;
-  }
-
+  function sec(emoji,heading,items){ const s=document.createElement("div"); s.className="help-section"; const h=document.createElement("div"); h.className="help-section-title"; h.textContent=emoji+" "+heading; s.appendChild(h); items.forEach(t=>{ const p=document.createElement("div"); p.className="help-item"; p.innerHTML=t; s.appendChild(p); }); return s; }
   const closeBtn=document.createElement("button"); closeBtn.className="btn-gold"; closeBtn.textContent="Got it! 👍";
   closeBtn.onclick=()=>{ container.style.display="none"; container.innerHTML=""; };
-
   popup.appendChild(title);
-  popup.appendChild(makeSection("🚀","Getting Started",[
-    "<b>Create a Session</b> — tap <b>+ Create New Session</b> to start. You get a unique room code.",
-    "<b>Share the code</b> with your mates — they open the same link, enter their name, and type in your room code to join.",
-    "Everyone's drinks update on all phones in real time!"
-  ]));
-  popup.appendChild(makeSection("🍺","My Drinks Tab",[
-    "<b>Tap any drink</b> to log it instantly. It adds to your personal total.",
-    "<b>Tap ✏️</b> next to a drink to update its price (handy at a different pub).",
-    "<b>Tap 🔔</b> next to a logged drink when you've finished it — plays a cowbell! 🐄",
-    "<b>Running totals</b> at the top show your spend, calories, standard drinks and drink count.",
-    "A <b>warning</b> appears if you hit your standard drinks or spending limit."
-  ]));
-  popup.appendChild(makeSection("🔔","The Shout Tab",[
-    "<b>Add members</b> by typing names and tapping + Add — add everyone in the group.",
-    "<b>Spin 🎲</b> to randomly pick who shouts first.",
-    "<b>Tap Next →</b> after each round to move to the next person's shout.",
-    "The <b>group log</b> shows every drink ordered with timestamps.",
-    "<b>Shout history</b> keeps track of who has shouted."
-  ]));
-  popup.appendChild(makeSection("📋","History Tab",[
-    "Shows every drink logged this session with the time it was ordered.",
-    "Admin can clear the history when starting a fresh session."
-  ]));
-  popup.appendChild(makeSection("🍺","Happy Hour",[
-    "Fri–Sun between 4PM and 6PM, beer prices automatically drop to $5.50.",
-    "A green notification pops up when happy hour starts.",
-    "The old price shows crossed out on each beer button."
-  ]));
-  popup.appendChild(makeSection("📯","Last Drinks",[
-    "Hit the big red <b>📯 LAST DRINKS!</b> button to sound the air horn.",
-    "It logs the time in History so everyone knows when last drinks was called."
-  ]));
-  popup.appendChild(makeSection("⚙️","Admin Panel",[
-    "Tap the <b>⚙️ gear icon</b> and enter your password to access admin.",
-    "<b>Prices</b> — update regular drink prices.",
-    "<b>Happy Hour</b> — update happy hour beer prices.",
-    "<b>Warnings</b> — set your standard drinks and spending alert thresholds.",
-    "<b>Members</b> — remove someone from the shout or clear session history.",
-    "<b>Password</b> — change your admin password."
-  ]));
-  popup.appendChild(makeSection("💡","Tips",[
-    "Add the website to your <b>home screen</b> so it opens like an app.",
-    "On Android: Chrome → three dots → Add to Home Screen.",
-    "On iPhone: Safari → Share button → Add to Home Screen.",
-    "The link never changes — share it once and everyone has it forever."
-  ]));
-
+  popup.appendChild(sec("🚀","Getting Started",["<b>Create a Session</b> — tap + Create New Session to start. You get a unique room code.","<b>Share the code</b> with your mates — they open the same link, enter their name, and type your code to join.","Everyone's drinks update on all phones in real time!"]));
+  popup.appendChild(sec("🍺","My Drinks Tab",["<b>Pick a category</b> (Beers, UDLs, Spirits, Wine, Soft) then tap any drink to log it.","<b>Tap ✏️</b> next to a drink to update its price — handy at a different pub.","<b>Tap 🔔</b> next to a logged drink when you've finished it.","Running totals show your spend, calories, standard drinks and count."]));
+  popup.appendChild(sec("🔔","The Shout Tab",["<b>Add members</b> — type names and tap + Add for everyone in the group.","<b>Spin 🎲</b> to pick who shouts first.","<b>Tap Next →</b> after each round to move to the next person's shout."]));
+  popup.appendChild(sec("🍺","Happy Hour",["Fri–Sun 4PM–6PM, beer prices drop automatically to $5.50.","A green banner appears when happy hour is active."]));
+  popup.appendChild(sec("📯","Last Drinks",["Hit the red 📯 LAST DRINKS! button to sound the air horn and log the time."]));
+  popup.appendChild(sec("⚙️","Admin Panel",["Tap the ⚙️ gear icon and enter your password.","Change prices, happy hour settings, warnings, members and password."]));
+  popup.appendChild(sec("💡","Tips",["Add this site to your home screen so it opens like an app.","Android: Chrome → three dots → Add to Home Screen.","iPhone: Safari → Share → Add to Home Screen."]));
   popup.appendChild(closeBtn);
   overlay.appendChild(popup); container.appendChild(overlay);
 }
 
-// ── PRICE EDIT POPUP ──────────────────────────────────────────────────────────
+// ── PRICE EDIT ────────────────────────────────────────────────────────────
 function showPriceEdit(drink){
   const container=document.getElementById("price-edit-container");
   container.style.display="block"; container.innerHTML="";
@@ -322,21 +307,12 @@ function showPriceEdit(drink){
   const regDollar=document.createElement("span"); regDollar.className="price-popup-dollar"; regDollar.textContent="$";
   const regInp=document.createElement("input"); regInp.className="price-popup-input"; regInp.type="number"; regInp.step="0.10"; regInp.min="0"; regInp.value=drink.price.toFixed(2);
   regWrap.appendChild(regDollar); regWrap.appendChild(regInp); regField.appendChild(regLabel); regField.appendChild(regWrap);
-  const isBeer=["hahn","tooheysnew","tooheyold","vb","xxxx"].includes(drink.id);
+  const isBeer=drink.cat==="beer";
   let happyInp=null, happyField=null;
-  if(isBeer){
-    happyField=document.createElement("div"); happyField.className="price-popup-field"; happyField.style.borderColor="#059669";
-    const happyLabel=document.createElement("div"); happyLabel.className="price-popup-label"; happyLabel.style.color="#059669"; happyLabel.textContent="Happy Hour Price";
-    const happyWrap=document.createElement("div"); happyWrap.className="price-popup-input-wrap";
-    const happyDollar=document.createElement("span"); happyDollar.className="price-popup-dollar"; happyDollar.style.color="#059669"; happyDollar.textContent="$";
-    happyInp=document.createElement("input"); happyInp.className="price-popup-input"; happyInp.type="number"; happyInp.step="0.10"; happyInp.min="0"; happyInp.value=drink.happyPrice.toFixed(2);
-    happyWrap.appendChild(happyDollar); happyWrap.appendChild(happyInp); happyField.appendChild(happyLabel); happyField.appendChild(happyWrap);
-  }
+  if(isBeer){ happyField=document.createElement("div"); happyField.className="price-popup-field"; happyField.style.borderColor="#059669"; const happyLabel=document.createElement("div"); happyLabel.className="price-popup-label"; happyLabel.style.color="#059669"; happyLabel.textContent="Happy Hour Price"; const happyWrap=document.createElement("div"); happyWrap.className="price-popup-input-wrap"; const happyDollar=document.createElement("span"); happyDollar.className="price-popup-dollar"; happyDollar.style.color="#059669"; happyDollar.textContent="$"; happyInp=document.createElement("input"); happyInp.className="price-popup-input"; happyInp.type="number"; happyInp.step="0.10"; happyInp.min="0"; happyInp.value=drink.happyPrice.toFixed(2); happyWrap.appendChild(happyDollar); happyWrap.appendChild(happyInp); happyField.appendChild(happyLabel); happyField.appendChild(happyWrap); }
   const btnRow=document.createElement("div"); btnRow.className="price-popup-btns";
-  const cancelBtn=document.createElement("button"); cancelBtn.className="btn-outline"; cancelBtn.style.flex="1"; cancelBtn.textContent="Cancel";
-  cancelBtn.onclick=()=>{ container.style.display="none"; container.innerHTML=""; };
-  const saveBtn=document.createElement("button"); saveBtn.className="btn-gold"; saveBtn.style.flex="1"; saveBtn.textContent="✓ Save";
-  saveBtn.onclick=()=>{ drink.price=parseFloat(regInp.value)||drink.price; if(happyInp) drink.happyPrice=parseFloat(happyInp.value)||drink.happyPrice; container.style.display="none"; container.innerHTML=""; render(); };
+  const cancelBtn=document.createElement("button"); cancelBtn.className="btn-outline"; cancelBtn.style.flex="1"; cancelBtn.textContent="Cancel"; cancelBtn.onclick=()=>{ container.style.display="none"; container.innerHTML=""; };
+  const saveBtn=document.createElement("button"); saveBtn.className="btn-gold"; saveBtn.style.flex="1"; saveBtn.textContent="✓ Save"; saveBtn.onclick=()=>{ drink.price=parseFloat(regInp.value)||drink.price; if(happyInp) drink.happyPrice=parseFloat(happyInp.value)||drink.happyPrice; container.style.display="none"; container.innerHTML=""; render(); };
   btnRow.appendChild(cancelBtn); btnRow.appendChild(saveBtn);
   popup.appendChild(emoji); popup.appendChild(name); popup.appendChild(hint); popup.appendChild(regField);
   if(happyField) popup.appendChild(happyField);
@@ -345,7 +321,7 @@ function showPriceEdit(drink){
   setTimeout(()=>regInp.focus(),50);
 }
 
-// ── ADMIN MODAL ───────────────────────────────────────────────────────────────
+// ── ADMIN MODAL ───────────────────────────────────────────────────────────
 function showAdminModal(){
   const container=document.getElementById("admin-modal-container");
   container.style.display="block"; container.innerHTML="";
@@ -355,8 +331,7 @@ function showAdminModal(){
   const inp=document.createElement("input"); inp.className="input"; inp.type="password"; inp.placeholder="Password..."; inp.autocomplete="off";
   const err=document.createElement("div"); err.className="err-text"; err.textContent="Incorrect password";
   const btnRow=document.createElement("div"); btnRow.className="modal-btns";
-  const cancelBtn=document.createElement("button"); cancelBtn.className="btn-outline"; cancelBtn.style.flex="1"; cancelBtn.textContent="Cancel";
-  cancelBtn.onclick=()=>{ container.style.display="none"; container.innerHTML=""; };
+  const cancelBtn=document.createElement("button"); cancelBtn.className="btn-outline"; cancelBtn.style.flex="1"; cancelBtn.textContent="Cancel"; cancelBtn.onclick=()=>{ container.style.display="none"; container.innerHTML=""; };
   const unlockBtn=document.createElement("button"); unlockBtn.className="btn-gold"; unlockBtn.style.flex="1"; unlockBtn.textContent="Unlock";
   unlockBtn.onclick=()=>{ if(inp.value===adminPass){ container.style.display="none"; container.innerHTML=""; isAdmin=true; currentTab="admin"; render(); } else { err.style.display="block"; inp.value=""; inp.focus(); } };
   inp.addEventListener("keydown",e=>{ if(e.key==="Enter") unlockBtn.click(); });
@@ -379,7 +354,7 @@ function makeDrinkBtn(d,onTap){
   const priceDiv=el("div",{class:"drink-price-wrap"},[]);
   priceDiv.appendChild(el("div",{class:isHappy?"drink-happy-price":"drink-price"},[fmtMoney(price)]));
   if(isHappy) priceDiv.appendChild(el("div",{class:"drink-old-price"},[fmtMoney(d.price)]));
-  const mainBtn=el("div",{class:"drink-btn",style:{borderColor:d.color}},[el("span",{class:"drink-emoji"},[d.emoji]),el("div",{class:"drink-mid"},[el("span",{class:"drink-name"},[d.name]),el("span",{class:"drink-sub"},[d.size+" · "+d.calories+" cal · "+d.std+" std"])]),priceDiv]);
+  const mainBtn=el("div",{class:"drink-btn",style:{borderColor:d.color}},[el("span",{class:"drink-emoji"},[d.emoji]),el("div",{class:"drink-mid"},[el("span",{class:"drink-name"},[d.name]),el("span",{class:"drink-sub"},[d.size+(d.std>0?" · "+d.calories+" cal · "+d.std+" std":"")])]),priceDiv]);
   mainBtn.onclick=onTap;
   const editBtn=el("button",{class:"drink-edit-btn",style:{borderColor:d.color}},["✏️"]);
   editBtn.onclick=(e)=>{ e.stopPropagation(); showPriceEdit(d); };
@@ -400,6 +375,18 @@ function makeStatRow(stats){
   return row;
 }
 
+function makeCatTabs(page){
+  const tabs=el("div",{class:"cat-tabs"},[]);
+  CATEGORIES.forEach(cat=>{
+    const btn=el("button",{class:"cat-tab"+(selectedCat===cat.id?" active":"")},[cat.label]);
+    btn.onclick=()=>{ selectedCat=cat.id; render(); };
+    tabs.appendChild(btn);
+  });
+  page.appendChild(tabs);
+  drinks.filter(d=>d.cat===selectedCat).forEach(d=>page.appendChild(makeDrinkBtn(d,()=>addDrink(d.id))));
+}
+
+// ── RENDER ────────────────────────────────────────────────────────────────
 function render(){
   const root=document.getElementById("app"); root.innerHTML="";
   if(screen==="name"){ root.appendChild(renderName()); return; }
@@ -434,22 +421,19 @@ function renderHome(){
 
 function renderMain(){
   const wrap=el("div",{});
-  if(showHappyNotif){ const close=el("button",{style:{background:"transparent",border:"none",color:"#059669",fontSize:"16px",fontWeight:"bold"}},["✕"]); close.onclick=()=>{ showHappyNotif=false; render(); }; wrap.appendChild(el("div",{class:"happy-notif"},["🍺 HAPPY HOUR! Beer prices have dropped to $5.50! ",close])); }
+  if(showHappyNotif){ const close=el("button",{style:{background:"transparent",border:"none",color:"#059669",fontSize:"16px",fontWeight:"bold"}},["✕"]); close.onclick=()=>{ showHappyNotif=false; render(); }; wrap.appendChild(el("div",{class:"happy-notif"},["🍺 HAPPY HOUR! Beer prices just dropped to $5.50! ",close])); }
   nowDate=new Date();
   const timeStr=nowDate.toLocaleTimeString([],{hour:"2-digit",minute:"2-digit"});
   const dateStr=`${dayNames[nowDate.getDay()]} ${nowDate.toLocaleDateString("en-AU",{day:"numeric",month:"short",year:"numeric"})}`;
   const gear=el("button",{class:"gear-btn"},["⚙️"]); gear.onclick=()=>{ if(isAdmin){ currentTab="admin"; render(); } else showAdminModal(); };
-  const helpBtn=el("button",{class:"help-btn"},["?"]);  helpBtn.onclick=showHelp;
+  const helpBtn=el("button",{class:"help-btn"},["?"]); helpBtn.onclick=showHelp;
   const sub=el("div",{class:"header-sub"},[]); sub.appendChild(el("span",{class:"room-code"},["#"+roomCode])); sub.appendChild(document.createTextNode(" · "+userName));
   if(happyHour) sub.appendChild(el("span",{class:"happy-tag"},[" · 🍺 Happy Hour!"]));
   const clockDiv=el("div",{class:"clock-box"},[]);
-  const clockTimeEl=document.createElement("div"); clockTimeEl.id="clock-time-el"; clockTimeEl.textContent=timeStr;
-  const clockDateEl=document.createElement("div"); clockDateEl.id="clock-date-el"; clockDateEl.textContent=dateStr;
-  clockDiv.appendChild(clockTimeEl); clockDiv.appendChild(clockDateEl);
-  wrap.appendChild(el("div",{class:"header"},[
-    el("div",{},[el("div",{class:"header-title"},["🍺 Drink Tracker"]),sub]),
-    el("div",{style:{display:"flex",alignItems:"center",gap:"4px"}},[clockDiv,helpBtn,gear])
-  ]));
+  const cte=document.createElement("div"); cte.id="clock-time-el"; cte.style.cssText="font-size:14px;font-weight:bold;color:#1a1a2e;"; cte.textContent=timeStr;
+  const cde=document.createElement("div"); cde.id="clock-date-el"; cde.style.cssText="font-size:9px;color:#999;letter-spacing:1px;"; cde.textContent=dateStr;
+  clockDiv.appendChild(cte); clockDiv.appendChild(cde);
+  wrap.appendChild(el("div",{class:"header"},[el("div",{},[el("div",{class:"header-title"},["🍺 Drink Tracker"]),sub]),el("div",{style:{display:"flex",alignItems:"center",gap:"4px"}},[clockDiv,helpBtn,gear])]));
   const tabBar=el("div",{class:"tab-bar"},[]);
   [["session","🍺 My Drinks"],["shout","🔔 The Shout"],["history","📋 History"]].forEach(([t,label])=>{ const btn=el("button",{class:"tab-btn"+(t===currentTab?" active":"")},[label]); btn.onclick=()=>{ currentTab=t; render(); }; tabBar.appendChild(btn); });
   wrap.appendChild(tabBar);
@@ -469,8 +453,8 @@ function renderSession(page){
   if(mt.std>=stdWarnAt) page.appendChild(el("div",{class:"warn"},["⚠️ "+mt.std.toFixed(1)+" standard drinks — please be careful"]));
   if(mt.spent>=spendWarnAt) page.appendChild(el("div",{class:"warn"},["💸 You've spent "+fmtMoney(mt.spent)+" tonight"]));
   if(happyHour) page.appendChild(el("div",{class:"happy-bar"},["🍺 Happy Hour — Beers are $5.50!"]));
-  page.appendChild(el("div",{class:"section-label"},["TAP TO ADD · ✏️ TO EDIT PRICE"]));
-  drinks.forEach(d=>page.appendChild(makeDrinkBtn(d,()=>addDrink(d.id))));
+  page.appendChild(el("div",{class:"section-label"},["SELECT A DRINK · ✏️ TO EDIT PRICE"]));
+  makeCatTabs(page);
   if(myLog.length>0){ page.appendChild(el("div",{class:"section-label"},["MY LOG — TAP 🔔 WHEN FINISHED"])); [...myLog].reverse().forEach(([key,e])=>{ const d=drinks.find(x=>x.id===e.drinkId); if(d) page.appendChild(makeLogRow(e,d,null,()=>markDone(key))); }); }
   const lb=el("button",{class:"btn-red"},["📯 LAST DRINKS!"]); lb.onclick=lastDrinks; page.appendChild(lb);
 }
@@ -488,6 +472,8 @@ function renderShout(page){
   const chips=el("div",{class:"chips"},[]); shoutOrder.forEach((m,i)=>{ const chip=el("div",{class:"chip"+(i===currentShout?" active":"")},[m]); if(isAdmin){ const x=el("span",{class:"chip-x"},["×"]); x.onclick=()=>removeMember(m); chip.appendChild(x); } chips.appendChild(chip); }); page.appendChild(chips);
   const hist=getShoutHistory();
   if(hist.length>0){ page.appendChild(el("div",{class:"section-label"},["SHOUT HISTORY"])); const he=el("div",{class:"shout-hist"},[]); hist.slice(0,10).forEach(h=>he.appendChild(el("div",{class:"shout-hist-row"},[el("span",{style:{color:"#d97706",fontWeight:"bold"}},[h.name]),el("span",{style:{fontSize:"11px",color:"#9ca3af"}},[fmtClock(h.time)])]))); page.appendChild(he); }
+  page.appendChild(el("div",{class:"section-label"},["SELECT A DRINK TO LOG"]));
+  makeCatTabs(page);
   if(allLog.length>0){ page.appendChild(el("div",{class:"section-label"},["GROUP LOG — TAP 🔔 WHEN FINISHED"])); [...allLog].reverse().forEach(([key,e])=>{ const d=drinks.find(x=>x.id===e.drinkId); if(d) page.appendChild(makeLogRow(e,d,e.member,()=>markDone(key))); }); }
   const lb=el("button",{class:"btn-red"},["📯 LAST DRINKS!"]); lb.onclick=lastDrinks; page.appendChild(lb);
 }
@@ -505,8 +491,13 @@ function renderAdmin(page){
   const tabsEl=el("div",{class:"admin-tabs"},[]);
   [["prices","💰 Prices"],["happyhour","🍺 Happy Hour"],["warnings","⚠️ Warnings"],["members","👥 Members"],["password","🔒 Password"]].forEach(([k,label])=>{ const b=el("button",{class:"admin-tab"+(adminSection===k?" active":"")},[label]); b.onclick=()=>{ adminSection=k; render(); }; tabsEl.appendChild(b); });
   page.appendChild(tabsEl);
-  if(adminSection==="prices"){ drinks.forEach(d=>{ const inp=el("input",{type:"number",step:"0.10",min:"0",class:"price-input"}); inp.value=d.price; inp.addEventListener("change",()=>{ d.price=parseFloat(inp.value)||0; }); page.appendChild(el("div",{class:"admin-row"},[el("span",{style:{fontSize:"20px"}},[d.emoji]),el("div",{style:{flex:"1"}},[el("div",{style:{fontSize:"13px",fontWeight:"bold",color:d.color}},[d.name]),el("div",{style:{fontSize:"10px",color:"#9ca3af"}},[d.size])]),el("div",{class:"price-box"},[el("span",{style:{color:"#d97706",fontWeight:"bold"}},["$"]),inp])])); }); }
-  if(adminSection==="happyhour"){ page.appendChild(el("div",{class:"section-label"},["HAPPY HOUR BEER PRICES"])); drinks.filter(d=>["hahn","tooheysnew","tooheyold","vb","xxxx"].includes(d.id)).forEach(d=>{ const inp=el("input",{type:"number",step:"0.10",min:"0",class:"price-input"}); inp.value=d.happyPrice; inp.addEventListener("change",()=>{ d.happyPrice=parseFloat(inp.value)||0; }); page.appendChild(el("div",{class:"admin-row"},[el("span",{style:{fontSize:"20px"}},[d.emoji]),el("div",{style:{flex:"1"}},[el("div",{style:{fontSize:"13px",fontWeight:"bold",color:d.color}},[d.name])]),el("div",{class:"price-box"},[el("span",{style:{color:"#059669",fontWeight:"bold"}},["$"]),inp])])); }); }
+  if(adminSection==="prices"){
+    CATEGORIES.forEach(cat=>{
+      page.appendChild(el("div",{class:"section-label"},[cat.label]));
+      drinks.filter(d=>d.cat===cat.id).forEach(d=>{ const inp=el("input",{type:"number",step:"0.10",min:"0",class:"price-input"}); inp.value=d.price; inp.addEventListener("change",()=>{ d.price=parseFloat(inp.value)||0; }); page.appendChild(el("div",{class:"admin-row"},[el("span",{style:{fontSize:"18px"}},[d.emoji]),el("div",{style:{flex:"1"}},[el("div",{style:{fontSize:"13px",fontWeight:"bold",color:d.color}},[d.name])]),el("div",{class:"price-box"},[el("span",{style:{color:"#d97706",fontWeight:"bold"}},["$"]),inp])])); });
+    });
+  }
+  if(adminSection==="happyhour"){ page.appendChild(el("div",{class:"section-label"},["HAPPY HOUR BEER PRICES"])); drinks.filter(d=>d.cat==="beer").forEach(d=>{ const inp=el("input",{type:"number",step:"0.10",min:"0",class:"price-input"}); inp.value=d.happyPrice; inp.addEventListener("change",()=>{ d.happyPrice=parseFloat(inp.value)||0; }); page.appendChild(el("div",{class:"admin-row"},[el("span",{style:{fontSize:"18px"}},[d.emoji]),el("div",{style:{flex:"1"}},[el("div",{style:{fontSize:"13px",fontWeight:"bold",color:d.color}},[d.name])]),el("div",{class:"price-box"},[el("span",{style:{color:"#059669",fontWeight:"bold"}},["$"]),inp])])); }); }
   if(adminSection==="warnings"){ page.appendChild(el("div",{class:"section-label"},["STD DRINKS WARNING"])); const si=el("input",{type:"number",min:"1",max:"20",class:"price-input",style:{width:"60px",background:"#f9fafb",border:"2px solid #e5e7eb",borderRadius:"8px",padding:"6px 10px"}}); si.value=stdWarnAt; si.addEventListener("change",()=>{ stdWarnAt=parseInt(si.value)||4; }); page.appendChild(el("div",{class:"admin-row"},[el("span",{style:{flex:"1",color:"#555",fontWeight:"bold"}},["Warn after std drinks:"]),si])); page.appendChild(el("div",{class:"section-label"},["SPENDING WARNING"])); const sp=el("input",{type:"number",min:"1",class:"price-input",style:{width:"60px",background:"#f9fafb",border:"2px solid #e5e7eb",borderRadius:"8px",padding:"6px 10px"}}); sp.value=spendWarnAt; sp.addEventListener("change",()=>{ spendWarnAt=parseInt(sp.value)||50; }); page.appendChild(el("div",{class:"admin-row"},[el("span",{style:{flex:"1",color:"#555",fontWeight:"bold"}},["Warn after spending $:"]),sp])); const lb=el("button",{class:"btn-red"},["📯 Trigger Last Drinks Now"]); lb.onclick=lastDrinks; page.appendChild(lb); }
   if(adminSection==="members"){ page.appendChild(el("div",{class:"section-label"},["REMOVE MEMBERS"])); (roomData?.shoutOrder||[]).forEach(m=>{ const rb=el("button",{class:"remove-btn"},["Remove"]); rb.onclick=()=>removeMember(m); page.appendChild(el("div",{class:"admin-row"},[el("span",{style:{flex:"1",color:"#1a1a2e",fontWeight:"bold"}},["👤 "+m]),rb])); }); page.appendChild(el("div",{class:"section-label"},["SESSION"])); const cb=el("button",{class:"btn-outline",style:{marginBottom:"8px"}},["🗑 Clear All Drink History"]); cb.onclick=clearRoom; page.appendChild(cb); const lb=el("button",{class:"btn-outline"},["🚪 Leave Session"]); lb.onclick=()=>{ screen="home"; roomCode=""; roomData={}; isAdmin=false; render(); }; page.appendChild(lb); }
   if(adminSection==="password"){ page.appendChild(el("div",{class:"section-label"},["CHANGE ADMIN PASSWORD"])); const inp=el("input",{type:"password",class:"input",placeholder:"New password..."}); const btn=el("button",{class:"btn-gold"},["Update Password"]); btn.onclick=()=>{ if(inp.value.trim()){ adminPass=inp.value.trim(); inp.value=""; alert("Password updated!"); }}; page.appendChild(inp); page.appendChild(btn); }
