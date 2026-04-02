@@ -8,8 +8,9 @@
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { background: #f0f2f5; color: #1a1a2e; font-family: Georgia, 'Times New Roman', serif; min-height: 100vh; }
     #app { max-width: 480px; margin: 0 auto; min-height: 100vh; padding-bottom: 30px; }
-    #admin-modal-container, #price-edit-container { position: fixed; inset: 0; z-index: 200; display: none; }
+    #admin-modal-container, #price-edit-container, #help-container { position: fixed; inset: 0; z-index: 200; display: none; }
     #price-edit-container { z-index: 300; }
+    #help-container { z-index: 250; }
     input, button { font-family: inherit; }
     button { cursor: pointer; }
 
@@ -34,9 +35,8 @@
     .room-code { color: #d97706; font-weight: bold; font-size: 13px; }
     .happy-tag { color: #059669; font-weight: bold; }
     .clock-box { text-align: right; }
-    .clock-time { font-size: 14px; font-weight: bold; color: #1a1a2e; }
-    .clock-date { font-size: 9px; color: #999; letter-spacing: 1px; }
-    .gear-btn { background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px; padding: 6px 10px; font-size: 16px; margin-left: 6px; }
+    .gear-btn, .help-btn { background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px; padding: 6px 10px; font-size: 16px; margin-left: 6px; }
+    .help-btn { background: #fffbeb; border-color: #fcd34d; color: #d97706; font-weight: bold; }
 
     .tab-bar { display: flex; border-bottom: 1px solid #e5e7eb; background: #fff; }
     .tab-btn { flex: 1; background: transparent; border: none; border-bottom: 3px solid transparent; color: #9ca3af; padding: 12px 4px; font-size: 11px; font-weight: bold; transition: all 0.2s; }
@@ -110,6 +110,18 @@
     .err-text { color: #dc2626; font-size: 12px; text-align: center; display: none; font-weight: bold; }
     .modal-btns { display: flex; gap: 8px; margin-top: 4px; }
 
+    /* Help popup */
+    .help-popup { background: #fff; border-radius: 20px; padding: 24px; width: 100%; max-width: 420px; max-height: 85vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.2); display: flex; flex-direction: column; gap: 16px; }
+    .help-title { font-size: 20px; font-weight: bold; color: #d97706; text-align: center; }
+    .help-section { background: #f9fafb; border-radius: 12px; padding: 14px 16px; border: 1px solid #e5e7eb; }
+    .help-section-title { font-size: 13px; font-weight: bold; color: #d97706; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+    .help-item { font-size: 13px; color: #444; margin-bottom: 6px; line-height: 1.5; padding-left: 4px; }
+    .help-item:last-child { margin-bottom: 0; }
+    .help-badge { display: inline-block; background: #fffbeb; border: 1px solid #fcd34d; border-radius: 6px; padding: 1px 6px; font-size: 11px; font-weight: bold; color: #d97706; margin-right: 4px; }
+    .help-badge-green { background: #ecfdf5; border-color: #6ee7b7; color: #059669; }
+    .help-badge-red { background: #fef2f2; border-color: #fca5a5; color: #dc2626; }
+    .help-badge-purple { background: #f5f3ff; border-color: #c4b5fd; color: #7c3aed; }
+
     .empty { text-align: center; color: #9ca3af; padding: 60px 20px; font-size: 14px; line-height: 2; }
     .member-add-row { display: flex; gap: 8px; margin-bottom: 10px; }
     .member-add-btn { background: #f59e0b; border: none; border-radius: 10px; padding: 10px 16px; font-weight: bold; color: #fff; font-size: 14px; white-space: nowrap; cursor: pointer; }
@@ -126,16 +138,13 @@
     .price-popup-dollar { font-size: 18px; font-weight: bold; color: #d97706; }
     .price-popup-input { width: 70px; background: transparent; border: none; font-size: 20px; font-weight: bold; color: #1a1a2e; outline: none; text-align: right; }
     .price-popup-btns { display: flex; gap: 8px; }
-
-    /* Clock widget — updates in place without full re-render */
-    #clock-time-el { font-size: 14px; font-weight: bold; color: #1a1a2e; }
-    #clock-date-el { font-size: 9px; color: #999; letter-spacing: 1px; }
   </style>
 </head>
 <body>
 <div id="app"></div>
 <div id="admin-modal-container"></div>
 <div id="price-edit-container"></div>
+<div id="help-container"></div>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
@@ -209,19 +218,93 @@ function getAllLog(){ return getLog().filter(([,e])=>e.drinkId!=="LASTDRINKS"); 
 function totals(log){ return log.reduce((a,[,e])=>({spent:a.spent+e.price,cal:a.cal+e.calories,std:a.std+e.std}),{spent:0,cal:0,std:0}); }
 function getShoutHistory(){ return roomData?.shoutHistory?Object.values(roomData.shoutHistory).sort((a,b)=>b.time-a.time):[]; }
 
-// ── CLOCK — updates in-place, never triggers full render ─────────────────────
 function updateClock(){
   nowDate=new Date();
   const timeEl=document.getElementById("clock-time-el");
   const dateEl=document.getElementById("clock-date-el");
   if(timeEl) timeEl.textContent=nowDate.toLocaleTimeString([],{hour:"2-digit",minute:"2-digit"});
   if(dateEl) dateEl.textContent=`${dayNames[nowDate.getDay()]} ${nowDate.toLocaleDateString("en-AU",{day:"numeric",month:"short",year:"numeric"})}`;
-  // Check happy hour change
   const happy=isHappyHour();
   if(happy&&!prevHappy){ showHappyNotif=true; render(); }
   prevHappy=happy; happyHour=happy;
 }
-setInterval(updateClock, 10000);
+setInterval(updateClock,10000);
+
+// ── HELP POPUP ────────────────────────────────────────────────────────────────
+function showHelp(){
+  const container=document.getElementById("help-container");
+  container.style.display="block"; container.innerHTML="";
+  const overlay=document.createElement("div"); overlay.className="overlay";
+  overlay.onclick=(e)=>{ if(e.target===overlay){ container.style.display="none"; container.innerHTML=""; }};
+
+  const popup=document.createElement("div"); popup.className="help-popup";
+
+  const title=document.createElement("div"); title.className="help-title"; title.textContent="🍺 How to Use Drink Tracker";
+
+  function makeSection(emoji, heading, items){
+    const sec=document.createElement("div"); sec.className="help-section";
+    const h=document.createElement("div"); h.className="help-section-title"; h.textContent=emoji+" "+heading;
+    sec.appendChild(h);
+    items.forEach(item=>{
+      const p=document.createElement("div"); p.className="help-item"; p.innerHTML=item; sec.appendChild(p);
+    });
+    return sec;
+  }
+
+  const closeBtn=document.createElement("button"); closeBtn.className="btn-gold"; closeBtn.textContent="Got it! 👍";
+  closeBtn.onclick=()=>{ container.style.display="none"; container.innerHTML=""; };
+
+  popup.appendChild(title);
+  popup.appendChild(makeSection("🚀","Getting Started",[
+    "<b>Create a Session</b> — tap <b>+ Create New Session</b> to start. You get a unique room code.",
+    "<b>Share the code</b> with your mates — they open the same link, enter their name, and type in your room code to join.",
+    "Everyone's drinks update on all phones in real time!"
+  ]));
+  popup.appendChild(makeSection("🍺","My Drinks Tab",[
+    "<b>Tap any drink</b> to log it instantly. It adds to your personal total.",
+    "<b>Tap ✏️</b> next to a drink to update its price (handy at a different pub).",
+    "<b>Tap 🔔</b> next to a logged drink when you've finished it — plays a cowbell! 🐄",
+    "<b>Running totals</b> at the top show your spend, calories, standard drinks and drink count.",
+    "A <b>warning</b> appears if you hit your standard drinks or spending limit."
+  ]));
+  popup.appendChild(makeSection("🔔","The Shout Tab",[
+    "<b>Add members</b> by typing names and tapping + Add — add everyone in the group.",
+    "<b>Spin 🎲</b> to randomly pick who shouts first.",
+    "<b>Tap Next →</b> after each round to move to the next person's shout.",
+    "The <b>group log</b> shows every drink ordered with timestamps.",
+    "<b>Shout history</b> keeps track of who has shouted."
+  ]));
+  popup.appendChild(makeSection("📋","History Tab",[
+    "Shows every drink logged this session with the time it was ordered.",
+    "Admin can clear the history when starting a fresh session."
+  ]));
+  popup.appendChild(makeSection("🍺","Happy Hour",[
+    "Fri–Sun between 4PM and 6PM, beer prices automatically drop to $5.50.",
+    "A green notification pops up when happy hour starts.",
+    "The old price shows crossed out on each beer button."
+  ]));
+  popup.appendChild(makeSection("📯","Last Drinks",[
+    "Hit the big red <b>📯 LAST DRINKS!</b> button to sound the air horn.",
+    "It logs the time in History so everyone knows when last drinks was called."
+  ]));
+  popup.appendChild(makeSection("⚙️","Admin Panel",[
+    "Tap the <b>⚙️ gear icon</b> and enter your password to access admin.",
+    "<b>Prices</b> — update regular drink prices.",
+    "<b>Happy Hour</b> — update happy hour beer prices.",
+    "<b>Warnings</b> — set your standard drinks and spending alert thresholds.",
+    "<b>Members</b> — remove someone from the shout or clear session history.",
+    "<b>Password</b> — change your admin password."
+  ]));
+  popup.appendChild(makeSection("💡","Tips",[
+    "Add the website to your <b>home screen</b> so it opens like an app.",
+    "On Android: Chrome → three dots → Add to Home Screen.",
+    "On iPhone: Safari → Share button → Add to Home Screen.",
+    "The link never changes — share it once and everyone has it forever."
+  ]));
+
+  popup.appendChild(closeBtn);
+  overlay.appendChild(popup); container.appendChild(overlay);
+}
 
 // ── PRICE EDIT POPUP ──────────────────────────────────────────────────────────
 function showPriceEdit(drink){
@@ -239,9 +322,8 @@ function showPriceEdit(drink){
   const regDollar=document.createElement("span"); regDollar.className="price-popup-dollar"; regDollar.textContent="$";
   const regInp=document.createElement("input"); regInp.className="price-popup-input"; regInp.type="number"; regInp.step="0.10"; regInp.min="0"; regInp.value=drink.price.toFixed(2);
   regWrap.appendChild(regDollar); regWrap.appendChild(regInp); regField.appendChild(regLabel); regField.appendChild(regWrap);
-  let happyInp=null;
   const isBeer=["hahn","tooheysnew","tooheyold","vb","xxxx"].includes(drink.id);
-  let happyField=null;
+  let happyInp=null, happyField=null;
   if(isBeer){
     happyField=document.createElement("div"); happyField.className="price-popup-field"; happyField.style.borderColor="#059669";
     const happyLabel=document.createElement("div"); happyLabel.className="price-popup-label"; happyLabel.style.color="#059669"; happyLabel.textContent="Happy Hour Price";
@@ -318,7 +400,6 @@ function makeStatRow(stats){
   return row;
 }
 
-// ── RENDER ────────────────────────────────────────────────────────────────────
 function render(){
   const root=document.getElementById("app"); root.innerHTML="";
   if(screen==="name"){ root.appendChild(renderName()); return; }
@@ -331,7 +412,6 @@ function renderName(){
   const btn=el("button",{class:"btn-gold"},["Let's Go 🍻"]);
   btn.onclick=()=>{ if(inp.value.trim()){ userName=inp.value.trim(); localStorage.setItem("dt_name",userName); screen="home"; render(); }};
   inp.addEventListener("keydown",e=>{ if(e.key==="Enter") btn.click(); });
-  // Clock updates DON'T re-render this screen — safe to type freely
   const d=el("div",{class:"gate"},[el("div",{class:"gate-beer"},["🍺"]),el("div",{class:"gate-title"},["Drink Tracker"]),el("div",{class:"gate-sub"},["Enter your name to get started"]),inp,btn]);
   setTimeout(()=>inp.focus(),50); return d;
 }
@@ -349,27 +429,27 @@ function renderHome(){
   roomInp.addEventListener("keydown",e=>{ if(e.key==="Enter") joinBtn.click(); });
   const changeBtn=el("button",{class:"link-btn"},["Not "+userName+"? Change name"]);
   changeBtn.onclick=()=>{ userName=""; localStorage.removeItem("dt_name"); screen="name"; render(); };
-  // Clock updates DON'T re-render this screen either — safe to type room code
   return el("div",{class:"gate"},[el("div",{class:"gate-beer"},["🍺"]),el("div",{class:"gate-title"},["Drink Tracker"]),el("div",{class:"gate-sub"},["G'day "+userName+"!"]),dateEl,createBtn,el("div",{class:"or-div"},["— or join existing —"]),roomInp,joinBtn,changeBtn]);
 }
 
 function renderMain(){
   const wrap=el("div",{});
   if(showHappyNotif){ const close=el("button",{style:{background:"transparent",border:"none",color:"#059669",fontSize:"16px",fontWeight:"bold"}},["✕"]); close.onclick=()=>{ showHappyNotif=false; render(); }; wrap.appendChild(el("div",{class:"happy-notif"},["🍺 HAPPY HOUR! Beer prices have dropped to $5.50! ",close])); }
-
-  // Header with live clock IDs so clock updates in-place
   nowDate=new Date();
   const timeStr=nowDate.toLocaleTimeString([],{hour:"2-digit",minute:"2-digit"});
   const dateStr=`${dayNames[nowDate.getDay()]} ${nowDate.toLocaleDateString("en-AU",{day:"numeric",month:"short",year:"numeric"})}`;
   const gear=el("button",{class:"gear-btn"},["⚙️"]); gear.onclick=()=>{ if(isAdmin){ currentTab="admin"; render(); } else showAdminModal(); };
+  const helpBtn=el("button",{class:"help-btn"},["?"]);  helpBtn.onclick=showHelp;
   const sub=el("div",{class:"header-sub"},[]); sub.appendChild(el("span",{class:"room-code"},["#"+roomCode])); sub.appendChild(document.createTextNode(" · "+userName));
   if(happyHour) sub.appendChild(el("span",{class:"happy-tag"},[" · 🍺 Happy Hour!"]));
   const clockDiv=el("div",{class:"clock-box"},[]);
   const clockTimeEl=document.createElement("div"); clockTimeEl.id="clock-time-el"; clockTimeEl.textContent=timeStr;
   const clockDateEl=document.createElement("div"); clockDateEl.id="clock-date-el"; clockDateEl.textContent=dateStr;
   clockDiv.appendChild(clockTimeEl); clockDiv.appendChild(clockDateEl);
-  wrap.appendChild(el("div",{class:"header"},[el("div",{},[el("div",{class:"header-title"},["🍺 Drink Tracker"]),sub]),el("div",{style:{display:"flex",alignItems:"center",gap:"6px"}},[clockDiv,gear])]));
-
+  wrap.appendChild(el("div",{class:"header"},[
+    el("div",{},[el("div",{class:"header-title"},["🍺 Drink Tracker"]),sub]),
+    el("div",{style:{display:"flex",alignItems:"center",gap:"4px"}},[clockDiv,helpBtn,gear])
+  ]));
   const tabBar=el("div",{class:"tab-bar"},[]);
   [["session","🍺 My Drinks"],["shout","🔔 The Shout"],["history","📋 History"]].forEach(([t,label])=>{ const btn=el("button",{class:"tab-btn"+(t===currentTab?" active":"")},[label]); btn.onclick=()=>{ currentTab=t; render(); }; tabBar.appendChild(btn); });
   wrap.appendChild(tabBar);
